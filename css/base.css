@@ -5,6 +5,9 @@ body{
     font-size: 16px;
     line-height: 1.6em;
     margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .container{
@@ -42,6 +45,7 @@ body{
 
 .topnav-right {
     float: right;
+    margin: 12px 12px;
 }
 
 .topnav-right a {
@@ -72,6 +76,9 @@ body{
     color: #fff;
 }
 
+#space-filler{
+    flex-grow: 1;
+}
 
 #footer{
     background: #333;
@@ -79,4 +86,5 @@ body{
     text-align: center;
     padding: 1px;
     margin-top: 40px;
+    margin-bottom: auto;
 }
