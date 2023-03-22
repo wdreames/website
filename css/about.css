@@ -1,0 +1,18 @@
+#about-me{
+    float: left;
+    width: 70%;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+#headshot{
+    float: right;
+    width: 30%;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+#headshot img{
+    width: 100%;
+    height:auto;
+}
