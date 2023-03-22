@@ -1,0 +1,20 @@
+#homepage{
+    background-image:url('../images/binary-code-background.png');
+    background-position: center center;
+    background-size: cover;
+    width: 100%;
+    height: 45vw;
+    min-height: 300px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 3vw;
+    font-weight: bold;
+}
+
+#main-name{
+    font-size: 11vw;
+    font-weight: bold;
+    text-align: center;
+    font-family: Snell Roundhand, cursive;
+    margin-bottom: 5vw;
+}
