@@ -2,8 +2,6 @@
 
 <script>
     $(document).ready(function() {
-        $(this).scrollTop(0);
-
         var hamburger = $('.hamburger');
         var menu = $('.menu');
 
@@ -22,6 +20,8 @@
                 menu.css('display: block');
             }
         })
+
+        $(this).scrollTop(0);
     });
 </script>
 
