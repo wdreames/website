@@ -1,6 +1,5 @@
 .resume{
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: 75vh;
     min-height: 500px;
-    max-height: 1000px;
 }
