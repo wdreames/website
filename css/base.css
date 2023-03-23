@@ -68,13 +68,24 @@ body{
     margin: 20px 20px;
 }
 
+span.bar {
+    width: 25px;
+    height: 3px;
+    background-color: #f2f2f2;
+    display: block;
+    margin: 5px auto;
+    transition-property: transform, opacity;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+}
+
 .hamburger:hover{
     background-color: #f2f2f2;
     color: #333;
 }
 
-.hamburger:before {
-    content: "\2261";
+.hamburger:hover span.bar {
+    background-color: #333;
 }
 
 @media screen and (max-width: 900px){
@@ -95,8 +106,20 @@ body{
     }
 }
 
-.active {
-    display: block;
+.hamburger.active span:nth-child(1){
+    transform: rotate(45deg) translate(5.8px, 5.8px);
+}
+
+.hamburger.active span:nth-child(2){
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3){
+    transform: rotate(-45deg) translate(5.8px, -5.8px);
+}
+
+.active{
+    display:block
 }
 
 #header-name{
