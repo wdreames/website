@@ -2,13 +2,14 @@
 
 <script>
     $(document).ready(function() {
+        $(this).scrollTop(0);
+
         var hamburger = $('.hamburger');
         var menu = $('.menu');
 
         hamburger.click(function() {
             menu.toggleClass('active');
             hamburger.toggleClass('active');
-            // $('nav ul').css('display: block');
         });
 
         $(window).resize(function(){
