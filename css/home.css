@@ -7,12 +7,14 @@
     /* min-height: 300px; */
     margin-bottom: 30px;
     text-align: center;
-    font-size: 3vw;
+    font-size: max(3vw, 30px);
+    line-height: 30px;
     font-weight: bold;
 }
 
 #main-name{
-    font-size: 11vw;
+    font-size: max(11vw, 105px);
+    line-height: 105px;
     font-weight: bold;
     text-align: center;
     font-family: Snell Roundhand, cursive;
