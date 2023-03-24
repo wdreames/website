@@ -3,7 +3,7 @@
 <script>
     $(document).ready(function() {
         var hamburger = $('.hamburger');
-        var menu = $('.menu');
+        var menu = $('.dropdown-menu');
 
         hamburger.click(function() {
             menu.toggleClass('active');
@@ -38,14 +38,20 @@
                     <span class="bar"></span>
                     <span class="bar"></span>
                 </div>
-                <ul class="menu">
+                <ul class="topnav-right-menu">
+                    <li><a href='/'>Home</a></li>
+                    <li><a href='about'>About Me</a></li>
+                    <li><a href='resume'>Resume</a></li>
+                    <li><a href='contact'>Contact</a></li>
+                </ul>
+                <ul class="dropdown-menu">
                     <li><a href='/'>Home</a></li>
                     <li><a href='about'>About Me</a></li>
                     <li><a href='resume'>Resume</a></li>
                     <li><a href='contact'>Contact</a></li>
                 </ul>
             </nav>
-            
         </div>
     </div>
 </div>
+

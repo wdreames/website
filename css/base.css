@@ -16,6 +16,24 @@ body{
     overflow: hidden;
 }
 
+#header-name{
+    font-size: 28px;
+    font-weight: bold;
+    font-family: Snell Roundhand, cursive;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#header-role{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#header{
+    background-color: navy;
+    color: #fff;
+}
+
 .topnav{
     background-color: navy;
     overflow: hidden;
@@ -52,9 +70,21 @@ body{
     color: #333;
 }
 
-.menu{
+.topnav-right-menu{
     display: flex;
     list-style: none;
+}
+
+.dropdown-menu{
+    list-style: none;
+    display: inline-block;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+}
+
+.dropdown-menu.active{
+    height: 250px;
 }
 
 .hamburger {
@@ -68,12 +98,33 @@ body{
     margin: 20px 20px;
 }
 
+.hamburger:hover{
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.hamburger:hover span.bar {
+    background-color: #333;
+}
+
 span.bar {
     width: 25px;
     height: 3px;
     background-color: #f2f2f2;
     display: block;
     margin: 5px auto;
+}
+
+.hamburger.active span:nth-child(1){
+    transform: rotate(45deg) translate(5.8px, 5.8px);
+}
+
+.hamburger.active span:nth-child(2){
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3){
+    transform: rotate(-45deg) translate(5.8px, -5.8px);
 }
 
 @supports (transition: all 0.5s ease-in-out){
@@ -90,65 +141,13 @@ span.bar {
     }
 }
 
-.hamburger:hover{
-    background-color: #f2f2f2;
-    color: #333;
-}
-
-.hamburger:hover span.bar {
-    background-color: #333;
-}
-
 @media screen and (max-width: 900px){
-    .menu {
+    .topnav-right-menu {
         display: none;
     }
     .hamburger {
         display: block;
     }
-}
-
-@media screen and (min-width: 900px){
-    .menu {
-        display: flex;
-    }
-    .hamburger {
-        display: none;
-    }
-}
-
-.hamburger.active span:nth-child(1){
-    transform: rotate(45deg) translate(5.8px, 5.8px);
-}
-
-.hamburger.active span:nth-child(2){
-    opacity: 0;
-}
-
-.hamburger.active span:nth-child(3){
-    transform: rotate(-45deg) translate(5.8px, -5.8px);
-}
-
-.active{
-    display:block
-}
-
-#header-name{
-    font-size: 28px;
-    font-weight: bold;
-    font-family: Snell Roundhand, cursive;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-#header-role{
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-#header{
-    background-color: navy;
-    color: #fff;
 }
 
 #space-filler{
