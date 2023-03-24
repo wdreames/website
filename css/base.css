@@ -29,13 +29,9 @@ body{
     margin-bottom: 0;
 }
 
-#header{
-    background-color: navy;
-    color: #fff;
-}
-
 .topnav{
     background-color: navy;
+    color: #fff;
     overflow: hidden;
     vertical-align: middle;
 }
