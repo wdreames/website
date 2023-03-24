@@ -1,3 +1,26 @@
+<script>
+    $(document).ready(function() {
+        var hamburger = $('.hamburger');
+        var menu = $('.dropdown-menu');
+
+        hamburger.click(function() {
+            menu.toggleClass('active');
+            hamburger.toggleClass('active');
+        });
+
+        $(window).resize(function(){
+            if ($(window).width() > 900){
+                menu.removeClass('active');
+                hamburger.removeClass('active');
+                menu.css('display: inline-block');
+            }
+            else {
+                menu.css('display: block');
+            }
+        })
+    });
+</script>
+
 <div class="topnav">
     <div class='container'>
         <div class="topnav-left">
@@ -7,10 +30,25 @@
             </a>
         </div>
         <div class='topnav-right'>
-            <a href='/'>Home</a>
-            <a href='about'>About Me</a>
-            <a href='resume'>Resume</a>
-            <a href='contact'>Contact</a>
+            <nav>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="topnav-right-menu">
+                    <li><a href='/'>Home</a></li>
+                    <li><a href='about'>About Me</a></li>
+                    <li><a href='resume'>Resume</a></li>
+                    <li><a href='contact'>Contact</a></li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li><a href='/'>Home</a></li>
+                    <li><a href='about'>About Me</a></li>
+                    <li><a href='resume'>Resume</a></li>
+                    <li><a href='contact'>Contact</a></li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
