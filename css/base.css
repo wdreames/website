@@ -30,10 +30,14 @@ body{
 }
 
 .topnav{
-    background-color: navy;
+    /* background-color: navy; */
+    background-image:url('../images/navy-background.jpeg');
+    background-position: center center;
+    background-size: cover;
     color: #fff;
     overflow: hidden;
     vertical-align: middle;
+    border-bottom: solid #333 5px;
 }
 
 .topnav a {
