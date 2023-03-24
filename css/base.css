@@ -75,6 +75,8 @@ body{
     list-style: none;
     display: inline-block;
     height: 0;
+    padding: 0;
+    margin: 0;
     overflow: hidden;
     transition: height 0.3s ease-in-out;
 }
