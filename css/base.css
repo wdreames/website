@@ -54,6 +54,7 @@ body{
     float: right;
     vertical-align: center;
     margin: 0px;
+    position: relative;
 }
 
 .topnav-right a {
@@ -73,7 +74,6 @@ body{
 
 .dropdown-menu{
     list-style: none;
-    display: none;
     height: 0;
     padding: 0;
     margin: 0;
@@ -83,7 +83,6 @@ body{
 
 .dropdown-menu.active{
     height: 250px;
-    display: block;
 }
 
 .hamburger {
