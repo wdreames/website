@@ -12,6 +12,7 @@ body{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    scroll-padding-top: 100px;
 }
 
 .container{
