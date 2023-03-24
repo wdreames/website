@@ -9,37 +9,27 @@
         src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
         crossorigin="anonymous"></script>
-
-    <style>
-        #page-content {
-            display: none;
-        }
-    </style>
+    <script>
+        $(function(){
+            // $('#header').load('base-html-files/header.html');
+            $('#footer').load('base-html-files/footer.html');
+        });
+        $(document).ready(function(){
+            $(this).scrollTop(0);
+        });
+    </script>
 </head>
 <body>
     <div id="header"></div>
 
-    <div id="page-content">
-        <div id="homepage">
-            <div class="container">
-                <p id="main-name">William Reames</p>
-                <p>Back-End Software Engineer</p>
-            </div>
+    <div id="homepage">
+        <div class="container">
+            <p id="main-name">William Reames</p>
+            <p>Back-End Software Engineer</p>
         </div>
     </div>
     
     <div id="space-filler"></div>
     <div id="footer"></div>
 </body>
-
-<script>
-    $(function(){
-        $('#header').load('base-html-files/header.html', function(){
-            $('#footer').load('base-html-files/footer.html', function(){
-                $('#page-content').css('display', 'block');
-                $(this).scrollTop(0);
-            });
-        });
-    });
-</script>
 </html>
