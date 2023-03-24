@@ -37,6 +37,7 @@
         $('#header').load('base-html-files/header.html', function(){
             $('#footer').load('base-html-files/footer.html', function(){
                 $('#page-content').css('display', 'block');
+                $(this).scrollTop(0);
             });
         });
     });
