@@ -78,7 +78,6 @@ body{
     padding: 0;
     margin: 0;
     overflow: hidden;
-    transition: height 0.3s ease-in-out;
 }
 
 .dropdown-menu.active{
@@ -125,17 +124,14 @@ span.bar {
     transform: rotate(-45deg) translate(5.8px, -5.8px);
 }
 
-@supports (transition: all 0.5s ease-in-out){
+@supports (transition: all 0.3s ease-in-out){
     span.bar{
         transition-property: transform, opacity;
-        transition-duration: 0.5s;
+        transition-duration: 0.3s;
         transition-timing-function: ease-in-out;
     }
-}
-
-@supports not (transition: all 0.5s ease-in-out){
-    span.bar{
-        transition: none;
+    .dropdown-menu{
+        transition: height 0.3s ease-in-out;
     }
 }
 
