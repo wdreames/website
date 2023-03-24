@@ -10,8 +10,22 @@
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
         crossorigin="anonymous"></script>
     <script>
+        $.get("base-html-files/header.html", function(data) {
+            var $temp = $("<div>");
+            $temp.html(data).css({
+                position: "absolute",
+                left: "-9999px",
+                visibility: "hidden",
+                height: "auto",
+                width: "100%"
+            });
+            $("body").append($temp);
+            var height = $temp.outerHeight();
+            $temp.remove();
+            $("#header").html(data).css({ height: height });
+        });
         $(function(){
-            $('#header').load('base-html-files/header.html');
+            // $('#header').load('base-html-files/header.html');
             $('#footer').load('base-html-files/footer.html');
         });
         $(document).ready(function(){
