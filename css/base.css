@@ -20,6 +20,11 @@ body{
     overflow: hidden;
 }
 
+#header{
+    height: 140px;
+    background-color: #333;
+}
+
 #header-name{
     font-size: 28px;
     font-weight: bold;
