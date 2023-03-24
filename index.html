@@ -32,6 +32,29 @@
             $(this).scrollTop(0);
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            var hamburger = $('.hamburger');
+            var menu = $('.dropdown-menu');
+
+            hamburger.click(function() {
+                menu.toggleClass('active');
+                hamburger.toggleClass('active');
+            });
+
+            $(window).resize(function(){
+                if ($(window).width() > 900){
+                    menu.removeClass('active');
+                    hamburger.removeClass('active');
+                    menu.css('display: inline-block');
+                }
+                else {
+                    menu.css('display: block');
+                }
+            })
+        });
+    </script>
 </head>
 <body>
     <div id="header"></div>
