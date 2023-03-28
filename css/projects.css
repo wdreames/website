@@ -13,10 +13,6 @@ html {
     overflow: hidden;
 }
 
-p {
-	text-align: left;
-}
-
 img {
 	float: right;
 	height: auto;
@@ -25,16 +21,20 @@ img {
 
 #aws-logo {
 	width: 15%;
+	min-width: 120px;
 }
 
 #hive-board-game {
 	width: 40%;
+	min-width: 240px;
 }
 
 #fractal {
 	width: 30%;
+	min-width: 240px;
 }
 
 #selenium-logo {
-	width: 20%;
+	width: 20%; 
+	min-width: 160px;
 }
