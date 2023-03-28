@@ -160,3 +160,12 @@ span.bar {
     margin-top: 40px;
     margin-bottom: auto;
 }
+
+a.no-right-margin {
+    margin-right: 0;
+}
+
+a.no-left-margin-padding {
+    margin-left: 0;
+    padding-left: 0;
+}
