@@ -7,3 +7,34 @@ html {
 		scroll-behavior: auto;
 	}
 }
+
+.inner-container {
+    margin: auto;
+    overflow: hidden;
+}
+
+p {
+	text-align: left;
+}
+
+img {
+	float: right;
+	height: auto;
+	padding-left: 20px;
+}
+
+#aws-logo {
+	width: 15%;
+}
+
+#hive-board-game {
+	width: 40%;
+}
+
+#fractal {
+	width: 30%;
+}
+
+#selenium-logo {
+	width: 20%;
+}
