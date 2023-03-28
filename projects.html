@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>William Reames</title>
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/projects.css">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=0.8">
+    <script
+        src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+        crossorigin="anonymous">
+    </script>
+    <script>
+        $(function(){
+            $('#header').load('base-html-files/header.html');
+            $('#footer').load('base-html-files/footer.html');
+        });
+    </script>
+</head>
+<body>
+    <div id="header"></div>
+
+    <div class="container">
+        <h1>Projects</h1>
+
+        <div class="inner-container">
+            <p>
+                This page contains a list of software development projects that I have worked on. This list includes:
+                <ul id="project-links">
+                    <li><a href="#website">This Website</a></li>
+                    <li><a href="#hive">Hive Board Game AI</a></li>
+                    <li><a href="#fractals">Making Melodious Music From Fractals</a></li>
+                    <li><a href="#class-selector">Automated Course Registration System</a></li>
+                    <li><a href="#professor-classes-mapper">Professor-Classes Mapper</a></li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="inner-container">
+            <h2 id="website">This Website</h2>
+            <img src="images/aws-logo.png" id="aws-logo">
+            <p>
+                This was the first project I have worked on with a focus in HTML and CSS. I had gotten a brief overview of both languages before, but I never used them as extensively or in-depth as I have with this project. It took a lot of trial and error, making Google searches, and sifting through stack overflow pages before I was able to get it to the place it is now. I did manage to learn a lot while working on it, and had fun while doing it.
+            </p>
+            <p>
+                This project also involved setting up an Amazon Web Services (AWS) EC2 server, purchasing a domain name from Google Domains, and obtaining an SSL certificate using Lets Encrypt to allow for HTTPS. 
+            </p>
+            <p>
+                The source code for this website can be found <a href="https://github.com/wdreames/website" target="_blank">here</a>.
+            </p>
+        </div>
+
+        <div class="inner-container">
+            <h2 id="hive">Hive Board Game AI</h2>
+            <img src="images/hive-board-game.jpeg" id="hive-board-game">
+            <p>
+                <i>Hive</i> is a two player bug-themed strategic board game in which each player is trying to surround/capture their opponent's queen bee. It can be somewhat analogous to chess, as there are several different types of pieces in the game with their own rules for movement. I personally find the game to be very fun and really enjoyed developing a bot for the game that people can play against. More information about <i>Hive</i> can be found <a href="https://boardgamegeek.com/boardgame/2655/hive" target="_blank">here</a>.
+            </p>
+            <p>
+                While working on this project, I was able to program the rules of the game, develop a method of scoring a game state, and implement a minimax algorithm for the AI. An in-depth explanation for how I implemented Hive and my minimax AI can be found <a href="https://github.com/wdreames/hive_board_game_ai/blob/master/documents/documentation.md" target="_blank">here</a>.
+            </p>
+            <!-- <img src="images/hive-ui.png" id="hive-ui"> -->
+            <p>
+                The source code for this project can be found <a href="https://github.com/wdreames/hive_board_game_ai" target="_blank">here</a>. It also contains instructions on how to install and play it yourself if you would like :)
+            </p>
+        </div>
+
+        <div class="inner-container">
+            <h2 id="fractals">Making Melodious Music From Fractals</h2>
+            <img src="images/fractal.jpeg" id="fractal">
+            <p>
+                During my sophomore year at Christopher Newport University (CNU), I took a class titled <i>Fractals and Infinity</i>. This course delved into the mathematics and theoretical aspects of fractals. At the end of the course, we each had to write a report on a topic of our choice in relation to the class. I chose to research if musical melodies could be formed based on fractal shapes, and if so, what they would sound like.
+            </p>
+            <p>
+                While researching this topic, I found that there methods had been discovered previously to accomplish this. I decided to build upon this, and develop a Python program to construct the fractal melodies using the algorithms I found, and output them into a sound file. 
+            </p>
+            <p>
+                The research paper I wrote on this topic can be found <a href="files/making-melodious-music-from-fractals.pdf" target="_blank">here</a>. It discusses how fractals can be converted into musical melodies, and explains how I converted this process into a Python script.
+            </p>
+            <p>
+                The source code for this project can be found <a href="https://github.com/wdreames/fractals_to_music" target="_blank">here</a>.
+            </p>
+        </div>
+
+        <div class="inner-container">
+            <h2 id="class-selector">Automated Course Registration System</h2>
+            <img src="images/selenium-logo.png" id="selenium-logo">
+            <p>
+                This project was developed to automate CNU's course registration process for myself (or any other student that chooses to use it). To register for classes at CNU, you need to log into the registration system during your time slot, enter the course ID numbers you want to register for, then submit the form. The issue with this, is that you need to be extremely fast if you want to get into a course with very few open seats. This is because there are many other students with the same registration time that will be trying to register for the same class. This was a problem I decided to solve through the use of a Python script.
+            </p>
+            <p>
+                The Python script I made used the Selenium package to control a web browser and automatically register a student for their classes as soon as their time slot opened. This meant that the courses would be registered as soon as they possibly could, and left little to no room for any human error. It included a configuration file for the course ID numbers, and had the user input their student ID and password. It also was developed so that it could be run overnight as well. That way the student using the program would no longer need to wake up extremely early in the morning. 
+            </p>
+            <p>
+                This program made course registration significantly easier for me while I was at CNU. Granted, it did take a bit of trial and error to get it to work perfectly, but I am still happy with how it turned out and I found it to be extremely useful.
+            </p>
+            <p>
+                The source code for this project can be found <a href="https://github.com/wdreames/class_scheduler" target="_blank">here</a>.
+            </p>
+        </div>
+
+        <div class="inner-container">
+            <h2 id="professor-classes-mapper">Professor-Classes Mapper</h2>
+            <p>
+                Something I was curious about while I was at CNU was which professors taught which classes. To figure this out, I made a simple Python script to output a relationship between professors and the list of classes they teach, as well as a relationship between classes and the list of all professors that have taught that class.
+            </p>
+            <p>
+                The source code for this project can be found <a href="https://github.com/wdreames/cnu-professors-classes-mapper" target="_blank">here</a>.
+            </p>
+        </div>
+    </div>
+    
+    <div id="space-filler"></div>
+    <div id="footer"></div>
+</body>
+</html>

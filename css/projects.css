@@ -1,0 +1,40 @@
+html {
+    scroll-behavior: smooth;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+.inner-container {
+    margin: auto;
+    overflow: hidden;
+}
+
+img {
+	float: right;
+	height: auto;
+	padding-left: 20px;
+}
+
+#aws-logo {
+	width: 15%;
+	min-width: 120px;
+}
+
+#hive-board-game {
+	width: 40%;
+	min-width: 240px;
+}
+
+#fractal {
+	width: 30%;
+	min-width: 240px;
+}
+
+#selenium-logo {
+	width: 20%; 
+	min-width: 160px;
+}
