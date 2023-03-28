@@ -84,6 +84,10 @@ body{
     overflow: hidden;
 }
 
+ul.dropdown-menu a {
+    float: right;
+}
+
 .dropdown-menu.active{
     height: 300px;
 }
@@ -96,7 +100,8 @@ body{
     font-size: 20px;
     background-color: #333;
     border-radius: 15%;
-    margin: 20px 20px;
+    margin: 20px;
+    margin-right: 0;
 }
 
 .hamburger:hover{
