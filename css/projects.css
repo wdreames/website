@@ -8,11 +8,6 @@ html {
 	}
 }
 
-.inner-container {
-    margin: auto;
-    overflow: hidden;
-}
-
 img {
 	float: right;
 	height: auto;

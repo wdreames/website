@@ -19,13 +19,24 @@
     <div id="header"></div>
 
     <div class="container">
-        <h1>Contact Me</h1>
-        <ul>
-            <li><a href="mailto: wdreames@gmail.com" target="_blank">wdreames@gmail.com</a></li>
-            <li><a href="mailto: william.reames.19@cnu.edu" target="_blank">william.reames.19@cnu.edu</a></li>
-            <li><a href="https://www.linkedin.com/in/william-reames-6428a1177/" target="_blank">LinkedIn</a></li>
-            <li><a href="https://github.com/wdreames" target="_blank">GitHub</a></li>
-        </ul>
+        <div class="inner-container">
+            <h1>Contact Me</h1>
+            <form action="contact_form.php" method="post">
+                <label>Name:</label><input type="text" name="name" required><br>
+                <label>Email:</label><input type="email" name="email" required><br>
+                <label>Message:</label><textarea name="message" required></textarea><br>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+        <div class="inner-container">
+            <h1>Contact Information</h1>
+            <ul>
+                <li><a href="mailto: wdreames@gmail.com" target="_blank">wdreames@gmail.com</a></li>
+                <li><a href="mailto: william.reames.19@cnu.edu" target="_blank">william.reames.19@cnu.edu</a></li>
+                <li><a href="https://www.linkedin.com/in/william-reames-6428a1177/" target="_blank">LinkedIn</a></li>
+                <li><a href="https://github.com/wdreames" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
     </div>
     
     <div id="space-filler"></div>
