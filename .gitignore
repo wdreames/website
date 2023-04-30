@@ -1,1 +1,4 @@
 *.code-workspace
+PHPMailer/*
+vendor/*
+composer.*

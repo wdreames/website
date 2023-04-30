@@ -7,13 +7,31 @@
     <script
         src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+	</script>
     <script>
         $(function(){
             $('#header').load('base-html-files/header.html');
             $('#footer').load('base-html-files/footer.html');
         });
     </script>
+	<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				const form = document.querySelector('form');
+				const sendMsgBtn = document.querySelector('#send-message');
+
+				sendMsgBtn.addEventListener('click', function(event) {
+					event.preventDefault();
+					const formData = new FormData(form);
+    				const xhr = new XMLHttpRequest();
+    				xhr.open('POST', 'contact_form.php');
+                    xhr.onload = function() {
+						window.alert(xhr.responseText);
+					}
+					xhr.send(formData);
+				});
+			});
+	</script>
 </head>
 <body>
     <div id="header"></div>
@@ -25,7 +43,7 @@
                 <label>Name:</label><input type="text" name="name" required><br>
                 <label>Email:</label><input type="email" name="email" required><br>
                 <label>Message:</label><textarea name="message" required></textarea><br>
-                <button type="submit">Send Message</button>
+                <button type="submit" id="send-message">Send Message</button>
             </form>
         </div>
         <div class="inner-container">
@@ -42,4 +60,7 @@
     <div id="space-filler"></div>
     <div id="footer"></div>
 </body>
+
+
+
 </html>
