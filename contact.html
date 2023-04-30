@@ -3,6 +3,7 @@
 <head>
     <title>William Reames</title>
     <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/contact.css">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=0.8">
     <script
         src="https://code.jquery.com/jquery-3.6.4.min.js"
@@ -40,9 +41,9 @@
         <div class="inner-container">
             <h1>Contact Me</h1>
             <form action="contact_form.php" method="post">
-                <label>Name:</label><input type="text" name="name" required><br>
-                <label>Email:</label><input type="email" name="email" required><br>
-                <label>Message:</label><textarea name="message" required></textarea><br>
+                <label>Name:</label><input type="text" name="name" required placeholder="Enter your name here..."><br>
+                <label>Email:</label><input type="email" name="email" required placeholder="Enter your email address here..."><br>
+                <label>Message:</label><textarea name="message" required placeholder="Type your message here..."></textarea><br>
                 <button type="submit" id="send-message">Send Message</button>
             </form>
         </div>
