@@ -3,29 +3,88 @@
 <head>
     <title>William Reames</title>
     <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/contact.css">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=0.8">
     <script
         src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+	</script>
     <script>
         $(function(){
             $('#header').load('base-html-files/header.html');
             $('#footer').load('base-html-files/footer.html');
         });
     </script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			const form = document.querySelector('form');
+			const spinner = document.getElementById('spinner');
+			const sendMsgBtn = document.querySelector('#send-message');
+
+			sendMsgBtn.addEventListener('click', function(event) {
+				event.preventDefault();
+				
+				event.target.disabled = true;
+				spinner.style.display = 'block';
+
+				const formData = new FormData(form);
+    			const xhr = new XMLHttpRequest();
+    			xhr.open('POST', 'contact_form.php');
+                xhr.onload = function() {
+					window.alert(xhr.responseText);
+					if (xhr.responseText.includes("success")) {
+						form.reset();
+					}
+					spinner.style.display='none';
+					event.target.disabled=false;
+				}
+				xhr.send(formData);
+			});
+		});
+	</script>
 </head>
 <body>
     <div id="header"></div>
-
+	
     <div class="container">
-        <h1>Contact Me</h1>
-        <ul>
-            <li><a href="mailto: wdreames@gmail.com" target="_blank">wdreames@gmail.com</a></li>
-            <li><a href="mailto: william.reames.19@cnu.edu" target="_blank">william.reames.19@cnu.edu</a></li>
-            <li><a href="https://www.linkedin.com/in/william-reames-6428a1177/" target="_blank">LinkedIn</a></li>
-            <li><a href="https://github.com/wdreames" target="_blank">GitHub</a></li>
-        </ul>
+        <div class="inner-container">
+            <h1>Contact Me</h1>
+            <form action="contact_form.php" method="post">
+                <label>Name:</label><input type="text" name="name" required placeholder="Enter your name here..."><br>
+                <label>Email:</label><input type="email" name="email" required placeholder="Enter your email address here..."><br>
+                <label>Message:</label><textarea name="message" required placeholder="Type your message here..."></textarea><br>
+                <div id="submission">
+					<button type="submit" id="send-message">Send Message</button>
+					<div id="spinner"></div>
+				</div>
+            </form>
+        </div>
+        <div class="inner-container">
+            <h1>Contact Information</h1>
+			<table>
+				<tr>
+					<td class="bullet-point">&bull;</td>
+					<td>Personal email:</td>
+					<td><a href="mailto: wdreames@gmail.com" target="_blank">wdreames@gmail.com</a></td>
+				</tr>
+				<tr>
+					<td class="bullet-point">&bull;</td>
+					<td>School email:</td>
+					<td><a href="mailto: william.reames.19@cnu.edu" target="_blank">william.reames.19@cnu.edu</a></td>
+				</tr>
+				<tr>
+					<td class="bullet-point">&bull;</td>
+					<td>LinkedIn:</td>
+					<td><a href="https://www.linkedin.com/in/william-reames-6428a1177/" target="_blank">https://www.linkedin.com/in/william-reames-6428a1177/</a></td>
+				</tr>
+				<tr>
+					<td class="bullet-point">&bull;</td>
+					<td>GitHub:</td>
+					<td><a href="https://github.com/wdreames" target="_blank">https://github.com/wdreames</a></td>
+				</tr>
+			</table>
+        </div>
     </div>
     
     <div id="space-filler"></div>

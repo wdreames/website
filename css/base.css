@@ -16,6 +16,11 @@ body{
     overflow: hidden;
 }
 
+.inner-container {
+    margin: auto;
+    overflow: hidden;
+}
+
 #header-name{
     font-size: 28px;
     font-weight: bold;
