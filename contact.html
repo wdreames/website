@@ -17,21 +17,21 @@
         });
     </script>
 	<script>
-			document.addEventListener("DOMContentLoaded", function() {
-				const form = document.querySelector('form');
-				const sendMsgBtn = document.querySelector('#send-message');
+		document.addEventListener("DOMContentLoaded", function() {
+			const form = document.querySelector('form');
+			const sendMsgBtn = document.querySelector('#send-message');
 
-				sendMsgBtn.addEventListener('click', function(event) {
-					event.preventDefault();
-					const formData = new FormData(form);
-    				const xhr = new XMLHttpRequest();
-    				xhr.open('POST', 'contact_form.php');
-                    xhr.onload = function() {
-						window.alert(xhr.responseText);
-					}
-					xhr.send(formData);
-				});
+			sendMsgBtn.addEventListener('click', function(event) {
+				event.preventDefault();
+				const formData = new FormData(form);
+    			const xhr = new XMLHttpRequest();
+    			xhr.open('POST', 'contact_form.php');
+                xhr.onload = function() {
+					window.alert(xhr.responseText);
+				}
+				xhr.send(formData);
 			});
+		});
 	</script>
 </head>
 <body>
