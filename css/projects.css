@@ -19,6 +19,11 @@ img {
 	min-width: 120px;
 }
 
+#chrome-extension {
+	width: 40%;
+	min-width: 240px;
+}
+
 #hive-board-game {
 	width: 40%;
 	min-width: 240px;
