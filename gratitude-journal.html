@@ -3,26 +3,38 @@
 <head>
     <title>William Reames</title>
     <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/gratitude-journal.css">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=0.8">
     <script
         src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
         crossorigin="anonymous">
     </script>
-    <script>
-        $(function(){
-            $('#header').load('base-html-files/header.html');
-            $('#footer').load('base-html-files/footer.html');
-        });
-    </script>
 </head>
 <body>
-    <div id="header"></div>
+    <div class="container" id="title">
+        <h1>William Reames' Gratitude Journal</h1>
+    </div>
 
     <div class="container">
+        <div id="journal">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur sapiente sit voluptates, nemo molestias qui. Vel veniam doloribus optio necessitatibus nisi nam? Iste, fugit ut ducimus libero sint rem unde. Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet quod ducimus fugiat suscipit ullam ex, quisquam maxime error dignissimos modi expedita similique saepe odio id ipsa, quo impedit perferendis deleniti? Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt asperiores exercitationem nulla veritatis animi repellendus eligendi eum, nesciunt nobis dignissimos consectetur rerum pariatur quasi iusto? Quam iusto praesentium vero optio! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id, hic iure! Impedit vel quaerat expedita eveniet nam eius, ipsa necessitatibus quam laborum culpa ad et molestias quia dolores recusandae error. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, autem odit dignissimos quae, deleniti, suscipit dolorum impedit recusandae modi quos asperiores cupiditate quod id minima minus? Earum, tenetur? Modi, eum. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quod eveniet aspernatur deleniti blanditiis soluta. Quibusdam atque ipsam reiciendis, magnam voluptates maiores nobis nam provident. Quaerat rem vero id assumenda amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed dolor eaque beatae! Obcaecati corrupti accusamus ex ut commodi eaque. Est, beatae? Voluptate porro totam excepturi in non expedita ad! Vero? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas facere ea a facilis sint inventore, aspernatur, reiciendis modi libero optio illo consequuntur saepe, veritatis iusto soluta distinctio! Ullam, ab odio. Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique maxime error velit nisi reprehenderit rerum necessitatibus magnam quia, eaque quibusdam assumenda pariatur unde quisquam autem dolore voluptatum enim facilis et. Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, ullam, praesentium temporibus quos alias quisquam animi autem quo qui accusamus atque enim excepturi dicta modi odio, illo beatae est ipsum? 
+        </div>
     </div>
-    
-    <div id="space-filler"></div>
-    <div id="footer"></div>
+
+    <div class="container" id="random-entry-form">
+        <form>
+            <label>Keywords:</label><input type="text" name="keywords">
+            <label>Start Date:</label><input type="date" name="start_date" placeholder="Start Date">
+            <label>End Date:</label><input type="date" name="end_date" placeholder="End Date">
+            <button id="random-entry">Find Random Journal Entry</button>
+        </form>
+    </div>
+    <div class="container" id="date-form">
+        <form>
+            <label>Date:</label><input type="date" name="date">
+            <button id="date-selection">Get Entries from Date</button>
+        </form>
+    </div>
 </body>
 </html>
