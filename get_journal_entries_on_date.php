@@ -4,7 +4,7 @@ if(isset($_POST['date'])){
     $date = $_POST['date'];
 }
 
-$parameters = "specific_date";
+$parameters = "date_selection";
 
 if(isset($date) && "" != trim($date)){
     $parameters = $parameters . " --date " . $date;

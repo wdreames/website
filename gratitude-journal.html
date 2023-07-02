@@ -10,6 +10,41 @@
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
         crossorigin="anonymous">
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const randomEntryForm = document.querySelector('#random-entry-form');
+            const randomEntryButton = document.querySelector('#random-entry-button');
+            const dateSelectionForm = document.querySelector('#date-selection-form');
+            const dateSelectionButton = document.querySelector('#date-selection-button');
+            const journalSpace = document.getElementById('journal');
+
+            randomEntryButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.target.disabled = true;
+                const formData = new FormData(randomEntryForm);
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'get_random_journal_entry.php');
+                xhr.onload = function() {
+                    journalSpace.innerText = xhr.responseText;
+                }
+                xhr.send(formData);
+                event.target.disabled = false;
+            });
+
+            dateSelectionButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.target.disabled = true;
+                const formData = new FormData(dateSelectionForm);
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'get_journal_entries_on_date.php');
+                xhr.onload = function() {
+                    journalSpace.innerText = xhr.responseText;
+                }
+                xhr.send(formData);
+                event.target.disabled = false;
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container" id="title">
@@ -22,18 +57,18 @@
         </div>
     </div>
 
-    <div class="container" id="random-entry-form">
-        <form action="get_random_journal_entry.php" method="post">
+    <div class="container">
+        <form id="random-entry-form" action="get_random_journal_entry.php" method="post">
             <label>Keywords:</label><input type="text" name="keywords">
             <label>Start Date:</label><input type="date" name="start_date" placeholder="Start Date">
             <label>End Date:</label><input type="date" name="end_date" placeholder="End Date">
-            <button id="random-entry">Find Random Journal Entry</button>
+            <button id="random-entry-button">Find Random Journal Entry</button>
         </form>
     </div>
-    <div class="container" id="date-form">
-        <form action="get_journal_entries_on_date.php" method="post">
+    <div class="container">
+        <form id="date-selection-form" action="get_journal_entries_on_date.php" method="post">
             <label>Date:</label><input type="date" name="date">
-            <button id="date-selection">Get Entries from Date</button>
+            <button id="date-selection-button">Get Entries from Date</button>
         </form>
     </div>
 </body>
