@@ -23,7 +23,7 @@
     </div>
 
     <div class="container" id="random-entry-form">
-        <form>
+        <form action="get_random_journal_entry.php" method="post">
             <label>Keywords:</label><input type="text" name="keywords">
             <label>Start Date:</label><input type="date" name="start_date" placeholder="Start Date">
             <label>End Date:</label><input type="date" name="end_date" placeholder="End Date">
@@ -31,7 +31,7 @@
         </form>
     </div>
     <div class="container" id="date-form">
-        <form>
+        <form action="get_journal_entries_on_date.php" method="post">
             <label>Date:</label><input type="date" name="date">
             <button id="date-selection">Get Entries from Date</button>
         </form>
