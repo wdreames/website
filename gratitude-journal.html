@@ -48,7 +48,7 @@
 </head>
 <body>
     <div class="container" id="title">
-        <h1>William Reames' Gratitude Journal</h1>
+        <h1>William's Gratitude Journal</h1>
     </div>
 
     <div class="container">
@@ -56,20 +56,31 @@
             Use the fields and buttons at the bottom of the page to begin searching through my gratitude journal :). I hope you're doing well, future self!
         </div>
     </div>
-
-    <div class="container">
-        <form id="random-entry-form" action="get_random_journal_entry.php" method="post">
-            <label>Keywords:</label><input type="text" name="keywords">
-            <label>Start Date:</label><input type="date" name="start_date" placeholder="Start Date">
-            <label>End Date:</label><input type="date" name="end_date" placeholder="End Date">
-            <button id="random-entry-button">Find Random Journal Entry</button>
-        </form>
-    </div>
-    <div class="container">
-        <form id="date-selection-form" action="get_journal_entries_on_date.php" method="post">
-            <label>Date:</label><input type="date" name="date">
-            <button id="date-selection-button">Get Entries from Date</button>
-        </form>
+    <div class="container" id="forms">
+        <div class="container" id="random-entry-container">
+            <form id="random-entry-form" action="get_random_journal_entry.php" method="post">
+                <div class="inner-container">
+                    <label>Keywords: </label><input type="text" name="keywords">
+                </div>
+                <div class="inner-container">
+                    <label>Start Date: </label><input type="date" name="start_date">
+                    <label>End Date: </label><input type="date" name="end_date">
+                </div>
+                <div class="inner-container">
+                    <button type="submit" id="random-entry-button">Find Random Journal Entry</button>
+                </div>
+            </form>
+        </div>
+        <div class="container" id="date-selection-container">
+            <form id="date-selection-form" action="get_journal_entries_on_date.php" method="post">
+                <div class="inner-container" id="date-input">
+                    <label>Date: </label><input type="date" name="date">
+                </div>
+                <div class="inner-container">
+                    <button type="submit" id="date-selection-button">Get Entries from Date</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

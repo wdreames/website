@@ -13,20 +13,15 @@ body {
 }
 
 #title h1 {
-    font-size: calc(8px + 3vw);
+    font-size: min(48px, max(8px, 5vw));
     font-weight: bold;
     font-family: Snell Roundhand, cursive;
 }
 
-#title p {
-    font-size: calc(8px + 1vw);
-}
-
 #journal {
-    height: 48vh;
+    height: 36vh;
     overflow: auto;
     padding: 10px;
-    /* flex-grow: 1; */
 }
 
 .container {
@@ -44,4 +39,65 @@ form {
 
 #date-form{
     margin-bottom: 3vh;
+}
+
+button[type="submit"]{
+    background-color: rgb(240, 191, 255);
+    border-color: black;
+    color: black;
+    border-width: 1px;
+    padding: 12px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: min(16px, max(12px, 2vw));
+    text-align: center;
+    margin: 12px;
+}
+
+button[type="submit"]:hover {
+    background-color: rgb(202, 152, 216);
+}
+
+input[type="text"] {
+    width: 60%;
+    margin: 12px;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#date-input {
+    padding-top:12px;
+}
+
+#forms.container {
+    background: none;
+    border: none;
+    padding-bottom: 12px;
+    width: 100%;
+    margin-top: 0;
+}
+
+/*
+If the screen is wide enough, the two forms will move side-by-side
+*/
+@media screen and (min-width: 920px){
+    #journal{
+        height: 48vh;
+    }
+    #forms.container {
+        width: 80%;
+        margin-top: 12px;
+    }
+    #random-entry-container {
+        width: 68%;
+        float: left;
+        height: 100%;
+        margin-top: 0;
+    }
+    #date-selection-container {
+        width: 28%;
+        float: right;
+        height: 100%;
+        margin-top: 0;
+    }
 }
