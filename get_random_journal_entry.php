@@ -1,7 +1,18 @@
 <?php
 
+function surroundKeywordsInQuotes($keywordString) {
+    $keywordArray = explode(" ", $keywordString);
+    $keywordArrayWithQuotes = array_map(
+        function ($word) {
+            return '"' . $word . '"';
+        }, 
+        $keywordArray
+    );
+    return implode(" ", $keywordArrayWithQuotes);
+}
+
 if(isset($_POST['keywords'])){ 
-    $keywords = $_POST['keywords'];
+    $keywords = surroundKeywordsInQuotes($_POST['keywords']);
 }
 if(isset($_POST['start_date'])){
     $start_date = $_POST['start_date'];
