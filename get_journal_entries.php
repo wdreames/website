@@ -53,42 +53,10 @@ class GetJournalEntry implements Command {
     }
 }
 
-// Main
-/*
- * Variables:
- * $undoStack  //initialized using PHP session
- * $redoStack  //initialized using PHP session
- * 
- * Obtain data from the POST request
- *   POST variables to expect:
- *   requestType: (random_entry | specific_date | undo | redo)
- *   based on requestType:
- *     if random_entry:
- *       $keywords
- *       $start_date
- *       $end_date
- *       $command = new Command($parameters);
- *     elif specific_date:
- *       $date
- *       $command = new Command($parameters);
- *     elif undo:
- *       $command = $undoStack.pop();
- *       $command.undo();
- *       $redoStack.push($command);
- *     elif redo:
- *       $command = redoStack.pop();
- *       $command.redo();
- *       $undoStack.push($command);
- *     else:
- *       // raise error
- * 
- * if not undo and not redo:
- *   // execute $command
- *   // add $command to $undoStack
- *   // wipe the $redoStack
- */
-
 // Wait to do this until I'm running it on my Linux server
+// $undoStack  //initialized using PHP session
+// $redoStack  //initialized using PHP session
+
 // $undoStack = new \Ds\Stack();
 // $redoStack = new \Ds\Stack();
 
@@ -166,10 +134,20 @@ function handleRequest($request_type, $previous_text) {
 
     if($request_type == $undo) {
         echo "undo placeholder";
+        /*
+         * $command = $undoStack.pop();
+         * $command.undo();
+         * $redoStack.push($command);
+         */
         return;
     }
     if($request_type == $redo) {
         echo "redo placeholder";
+        /*
+         * $command = redoStack.pop();
+         * $command.redo();
+         * $undoStack.push($command);
+         */
         return;
     }
 
@@ -181,6 +159,7 @@ function handleRequest($request_type, $previous_text) {
     }
     else {
         echo "$error_str";
+        return;
     }
 
     $command->execute();
