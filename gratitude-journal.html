@@ -16,38 +16,43 @@
             const randomEntryButton = document.querySelector('#random-entry-button');
             const dateSelectionForm = document.querySelector('#date-selection-form');
             const dateSelectionButton = document.querySelector('#date-selection-button');
+            const undoButton = document.querySelector('#undo-button');
+            const redoButton = document.querySelector('#redo-button');
             const journalSpace = document.getElementById('journal');
 
-            randomEntryButton.addEventListener('click', function(event) {
+            function createRequest(event, formData, requestType) {
                 event.preventDefault();
                 event.target.disabled = true;
-                const formData = new FormData(randomEntryForm);
                 formData.append('previous_text', journalSpace.innerText);
-                formData.append('request_type', 'random_entry');
+                formData.append('request_type', requestType);
 
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', 'get_journal_entries.php');
                 xhr.onload = function() {
                     journalSpace.innerText = xhr.responseText;
+                    event.target.disabled = false;
                 }
                 xhr.send(formData);
-                event.target.disabled = false;
+            }
+
+            randomEntryButton.addEventListener('click', function(event) {
+                const formData = new FormData(randomEntryForm);
+                createRequest(event, formData, 'random_entry');
             });
 
             dateSelectionButton.addEventListener('click', function(event) {
-                event.preventDefault();
-                event.target.disabled = true;
                 const formData = new FormData(dateSelectionForm);
-                formData.append('previous_text', journalSpace.innerText);
-                formData.append('request_type', 'date_selection');
+                createRequest(event, formData, 'date_selection');
+            });
 
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'get_journal_entries.php');
-                xhr.onload = function() {
-                    journalSpace.innerText = xhr.responseText;
-                }
-                xhr.send(formData);
-                event.target.disabled = false;
+            undoButton.addEventListener('click', function(event) {
+                const formData = new FormData();
+                createRequest(event, formData, 'undo');
+            });
+
+            redoButton.addEventListener('click', function(event) {
+                const formData = new FormData();
+                createRequest(event, formData, 'redo');
             });
         });
     </script>
@@ -60,6 +65,10 @@
     <div class="container">
         <div id="journal">
             Use the fields and buttons at the bottom of the page to begin searching through my gratitude journal :). I hope you're doing well, future self!
+        </div>
+        <div class="inner-container">
+            <button type="submit" id="undo-button">Previous</button>
+            <button type="submit" id="redo-button">Next</button>
         </div>
     </div>
     <div class="container" id="forms">
