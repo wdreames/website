@@ -1,6 +1,7 @@
 <?php
 
-// use \Ds\Stack;
+require_once("vendor/autoload.php");
+use \Ds\Stack;
 
 // global variables
 $random_entry = "random_entry";
@@ -13,6 +14,11 @@ $keywords_parameter = "keywords";
 $start_date_parameter = "start_date";
 $end_date_parameter = "end_date";
 $date_parameter = "date";
+
+$undo_stack = new Stack();
+$redo_stack = new Stack();
+
+$default_journal_message = "Use the fields and buttons at the bottom of the page to begin searching through my gratitude journal :). I hope you're doing well, future self!";
 
 interface Command {
     public function execute(): void;
@@ -56,9 +62,6 @@ class GetJournalEntry implements Command {
 // Wait to do this until I'm running it on my Linux server
 // $undoStack  //initialized using PHP session
 // $redoStack  //initialized using PHP session
-
-// $undoStack = new \Ds\Stack();
-// $redoStack = new \Ds\Stack();
 
 function surroundKeywordsInQuotes($keywordString) {
     $keywordArray = explode(" ", $keywordString);
@@ -116,7 +119,7 @@ function getDateSelectionCommand($previous_text) {
 }
 
 function handleRequest($request_type, $previous_text) {
-    global $random_entry, $date_selection, $undo, $redo;
+    global $random_entry, $date_selection, $undo, $redo, $undo_stack, $redo_stack, $default_journal_message;
 
     $request_type_options = [
         $random_entry,
@@ -133,21 +136,23 @@ function handleRequest($request_type, $previous_text) {
     }
 
     if($request_type == $undo) {
-        echo "undo placeholder";
-        /*
-         * $command = $undoStack.pop();
-         * $command.undo();
-         * $redoStack.push($command);
-         */
+        if($undo_stack->isEmpty()){
+            echo "$default_journal_message";
+            return;
+        }
+        $command = $undo_stack->pop();
+        $command->undo();
+        $redo_stack->push($command);
         return;
     }
     if($request_type == $redo) {
-        echo "redo placeholder";
-        /*
-         * $command = redoStack.pop();
-         * $command.redo();
-         * $undoStack.push($command);
-         */
+        if($redo_stack->isEmpty()){
+            echo "$default_journal_message";
+            return;
+        }
+        $command = $redo_stack->pop();
+        $command->redo();
+        $undo_stack->push($command);
         return;
     }
 
@@ -163,12 +168,20 @@ function handleRequest($request_type, $previous_text) {
     }
 
     $command->execute();
-    // add $command to $undoStack
-    // clear $redoStack
+    $undo_stack->push($command);
+    $redo_stack->clear();
 }
 
 function main() {
-    global $request_type_parameter, $previous_text_parameter;
+    global $request_type_parameter, $previous_text_parameter, $undo_stack, $redo_stack;
+
+    session_start();
+    if(isset($_SESSION['undo_stack'])){
+        $undo_stack = unserialize($_SESSION['undo_stack']);
+    }
+    if(isset($_SESSION['redo_stack'])){
+        $redo_stack = unserialize($_SESSION['redo_stack']);
+    }
 
     if(isset($_POST[$request_type_parameter])){
         $request_type = $_POST[$request_type_parameter];
@@ -185,6 +198,9 @@ function main() {
     }
 
     handleRequest($request_type, $previous_text);
+
+    $_SESSION['undo_stack'] = serialize($undo_stack);
+    $_SESSION['redo_stack'] = serialize($redo_stack);
 }
 
 main();
