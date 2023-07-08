@@ -40,7 +40,7 @@ class GetJournalEntry implements Command {
     }
 
     public function execute(): void {
-        $this->newText = invokePythonScript();
+        $this->newText = $this->invokePythonScript();
         $this->updateJournalText($this->newText);
     }
 
@@ -104,16 +104,18 @@ function surroundKeywordsInQuotes($keywordString) {
 }
 
 function getRandomEntryCommand($previous_text) {
-    $parameters = $RANDOM_ENTRY;
+    global $random_entry, $keywords_parameter, $start_date_parameter, $end_date_parameter;
 
-    if(isset($_POST[$GLOBALS['keywords_parameter']])){ 
-        $keywords = surroundKeywordsInQuotes($_POST[$GLOBALS['keywords_parameter']]);
+    $parameters = $random_entry;
+
+    if(isset($_POST[$keywords_parameter])){ 
+        $keywords = surroundKeywordsInQuotes($_POST[$keywords_parameter]);
     }
-    if(isset($_POST[$START_DATE_PARAMETER])){
-        $start_date = $_POST[$START_DATE_PARAMETER];
+    if(isset($_POST[$start_date_parameter])){
+        $start_date = $_POST[$start_date_parameter];
     }
-    if(isset($_POST[$END_DATE_PARAMETER])){
-        $end_date = $_POST[$END_DATE_PARAMETER];
+    if(isset($_POST[$end_date_parameter])){
+        $end_date = $_POST[$end_date_parameter];
     }    
     
     if(isset($keywords) && "" != trim($keywords)){
@@ -130,10 +132,12 @@ function getRandomEntryCommand($previous_text) {
 }
 
 function getDateSelectionCommand($previous_text) {
-    $parameters = $DATE_SELECTION;
+    global $date_selection, $date_parameter;
 
-    if(isset($_POST[$DATE_PARAMETER])){
-        $date = $_POST[$DATE_PARAMETER];
+    $parameters = $date_selection;
+
+    if(isset($_POST[$date_parameter])){
+        $date = $_POST[$date_parameter];
     }
 
     if(isset($date) && "" != trim($date)){
@@ -144,49 +148,58 @@ function getDateSelectionCommand($previous_text) {
 }
 
 function handleRequest($request_type, $previous_text) {
+    global $random_entry, $date_selection, $undo, $redo;
+
     $request_type_options = [
-        $GLOBALS['random_entry'],
-        $GLOBALS['date_selection'],
-        $GLOBALS['undo'],
-        $GLOBALS['redo']
+        $random_entry,
+        $date_selection,
+        $undo,
+        $redo
     ];
+
+    $request_type_options_str = implode(', ', $request_type_options);
+    $error_str = "ERROR: Invalid request type: '$request_type'. Available options are: $request_type_options_str.";
     if(!in_array($request_type, $request_type_options)) {
-        $request_type_options_string = implode(', ', $request_type_options);
-        echo "ERROR: Invalid request type: '$request_type'. Available options are: $request_type_options_string.";
-            return;
+        echo "$error_str";
+        return;
     }
 
-    if($request_type == $UNDO) {
+    if($request_type == $undo) {
         echo "undo placeholder";
         return;
     }
-    if($request_type = $REDO) {
+    if($request_type == $redo) {
         echo "redo placeholder";
         return;
     }
 
-    if($request_type == $RANDOM_ENTRY) {
+    if($request_type == $random_entry) {
         $command = getRandomEntryCommand($previous_text);
     }
-    elseif($request_type == $DATE_SELECTION) {
+    elseif($request_type == $date_selection) {
         $command = GetDateSelectionCommand($previous_text);
     }
+    else {
+        echo "$error_str";
+    }
 
-    $command.execute();
+    $command->execute();
     // add $command to $undoStack
     // clear $redoStack
 }
 
 function main() {
-    if(isset($_POST[$GLOBALS['request_type_parameter']])){
-        $request_type = $_POST[$GLOBALS['request_type_parameter']];
+    global $request_type_parameter, $previous_text_parameter;
+
+    if(isset($_POST[$request_type_parameter])){
+        $request_type = $_POST[$request_type_parameter];
     }
     else {
         $request_type = "";
     }
     
-    if(isset($_POST[$GLOBALS['previous_text_parameter']])){
-        $previous_text = $_POST[$GLOBALS['previous_text_parameter']];
+    if(isset($_POST[$previous_text_parameter])){
+        $previous_text = $_POST[$previous_text_parameter];
     }
     else {
         $previous_text = "";
@@ -195,7 +208,6 @@ function main() {
     handleRequest($request_type, $previous_text);
 }
 
-echo "Hello world!";
 main();
 
 ?>

@@ -22,8 +22,11 @@
                 event.preventDefault();
                 event.target.disabled = true;
                 const formData = new FormData(randomEntryForm);
+                formData.append('previous_text', journalSpace.innerText);
+                formData.append('request_type', 'random_entry');
+
                 const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'get_random_journal_entry.php');
+                xhr.open('POST', 'get_journal_entries.php');
                 xhr.onload = function() {
                     journalSpace.innerText = xhr.responseText;
                 }
@@ -35,8 +38,11 @@
                 event.preventDefault();
                 event.target.disabled = true;
                 const formData = new FormData(dateSelectionForm);
+                formData.append('previous_text', journalSpace.innerText);
+                formData.append('request_type', 'date_selection');
+
                 const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'get_journal_entries_on_date.php');
+                xhr.open('POST', 'get_journal_entries.php');
                 xhr.onload = function() {
                     journalSpace.innerText = xhr.responseText;
                 }
