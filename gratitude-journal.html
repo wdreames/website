@@ -15,18 +15,22 @@
             const randomEntryForm = document.querySelector('#random-entry-form');
             const randomEntryButton = document.querySelector('#random-entry-button');
             const dateSelectionForm = document.querySelector('#date-selection-form');
+            const dateSelectionInput = document.querySelector('#date-selection-input');
             const dateSelectionButton = document.querySelector('#date-selection-button');
-            const undoButton = document.querySelector('#undo-button');
-            const redoButton = document.querySelector('#redo-button');
             const journalSpace = document.getElementById('journal');
-            
+
             const grayscaleColor = "rgb(190, 190, 190)";
             const purpleColor = "rgb(240, 191, 255)";
             const purpleHoverColor = "rgb(202, 152, 216)";
 
+            const undoButton = document.querySelector('#undo-button');
+            const redoButton = document.querySelector('#redo-button');
+            disableButton(undoButton);
+            disableButton(redoButton);
+    
             // Same as variable used in get_journal_entries.php
             const outputTextSplitter = "=====================";
-            
+
             function disableButton(button) {
                 button.style.backgroundColor = grayscaleColor;
                 button.disabled = true;
@@ -51,12 +55,44 @@
                 });
             }
 
-            function updateJournalText(event, responseText) {
-                responseTextSplit = responseText.split(outputTextSplitter);
-                journalText = responseTextSplit[0].trim();
-                variablesText = responseTextSplit.pop().trim();
-                variablesTextSplit = variablesText.split('\n');
+            function updateDateSelectionButton(journalText) {
+                var dateInJournal = journalText.split('\n')[0].trim();
 
+                const monthMap = {
+                    "January": 0,
+                    "February": 1,
+                    "March": 2,
+                    "April": 3,
+                    "May": 4,
+                    "June": 5,
+                    "July": 6,
+                    "August": 7,
+                    "September": 8,
+                    "October": 9,
+                    "November": 10,
+                    "December": 11
+                };
+
+                const dateComponents = dateInJournal.split(' ');
+                const month = monthMap[dateComponents[0]];
+                const day = parseInt(dateComponents[1]);
+                const year = parseInt(dateComponents[2]);
+
+                const date = new Date(year, month, day);
+
+                var dateCreatedProperly = !isNaN(date.getTime());
+                if(dateCreatedProperly) {
+                    dateSelectionInput.value = date.toISOString().split('T')[0];
+                }
+            }
+
+            function updateJournalText(event, responseText) {
+                var responseTextSplit = responseText.split(outputTextSplitter);
+                var journalText = responseTextSplit[0].trim();
+                var variablesText = responseTextSplit.pop().trim();
+                var variablesTextSplit = variablesText.split('\n');
+
+                // Check get_journal_entries.php to confirm order of variable outputs
                 var undoStackEmpty = (variablesTextSplit[0].trim() === "true");
                 var redoStackEmpty = (variablesTextSplit[1].trim() === "true");
 
@@ -64,6 +100,7 @@
                 (redoStackEmpty) ? disableButton(redoButton) : enableButton(redoButton);
                 
                 journalSpace.innerText = journalText;
+                updateDateSelectionButton(journalText);
             }
 
             function createRequest(event, formData, requestType) {
@@ -137,7 +174,7 @@
         <div class="container" id="date-selection-container">
             <form id="date-selection-form" action="get_journal_entries_on_date.php" method="post">
                 <div class="inner-container" id="date-input">
-                    <label>Date: </label><input type="date" name="date">
+                    <label>Date: </label><input type="date" name="date" id="date-selection-input">
                 </div>
                 <div class="inner-container">
                     <button type="submit" id="date-selection-button">Get Entries from Date</button>
