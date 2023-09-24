@@ -14,6 +14,7 @@ $keywords_parameter = "keywords";
 $start_date_parameter = "start_date";
 $end_date_parameter = "end_date";
 $date_parameter = "date";
+$output_text_splitter = "\n=====================";
 
 $undo_stack = new Stack();
 $redo_stack = new Stack();
@@ -173,7 +174,7 @@ function handleRequest($request_type, $previous_text) {
 }
 
 function main() {
-    global $request_type_parameter, $previous_text_parameter, $undo_stack, $redo_stack;
+    global $request_type_parameter, $previous_text_parameter, $undo_stack, $redo_stack, $output_text_splitter;
 
     session_start();
     if(isset($_SESSION['undo_stack'])){
@@ -197,7 +198,16 @@ function main() {
         $previous_text = "";
     }
 
+    // Output variables I use are not important when processing the previous text.
+    $previous_text = explode($output_text_splitter, $previous_text)[0];
+
     handleRequest($request_type, $previous_text);
+
+    $undo_stack_empty = $undo_stack->isEmpty() ? 'true' : 'false';
+    $redo_stack_empty = $redo_stack->isEmpty() ? 'true' : 'false';
+    echo "$output_text_splitter";
+    echo "\n$undo_stack_empty";
+    echo "\n$redo_stack_empty";
 
     $_SESSION['undo_stack'] = serialize($undo_stack);
     $_SESSION['redo_stack'] = serialize($redo_stack);

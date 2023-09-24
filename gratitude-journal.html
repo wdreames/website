@@ -19,6 +19,52 @@
             const undoButton = document.querySelector('#undo-button');
             const redoButton = document.querySelector('#redo-button');
             const journalSpace = document.getElementById('journal');
+            
+            const grayscaleColor = "rgb(190, 190, 190)";
+            const purpleColor = "rgb(240, 191, 255)";
+            const purpleHoverColor = "rgb(202, 152, 216)";
+
+            // Same as variable used in get_journal_entries.php
+            const outputTextSplitter = "\n=====================";
+            
+            function disableButton(button) {
+                button.style.backgroundColor = grayscaleColor;
+                button.disabled = true;
+
+                button.addEventListener("mouseenter", (event) => {
+                    button.style.backgroundColor = grayscaleColor;
+                });
+                button.addEventListener("mouseleave", (event) => {
+                    button.style.backgroundColor = grayscaleColor;
+                });
+            }
+            
+            function enableButton(button) {
+                button.style.backgroundColor = purpleColor;
+                button.disabled = false;
+
+                button.addEventListener("mouseenter", (event) => {
+                    button.style.backgroundColor = purpleHoverColor;
+                });
+                button.addEventListener("mouseleave", (event) => {
+                    button.style.backgroundColor = purpleColor;
+                });
+            }
+
+            function updateJournalText(event, responseText) {
+                responseTextSplit = responseText.split(outputTextSplitter);
+                journalText = responseTextSplit[0].trim();
+                variablesText = responseTextSplit.pop().trim();
+                variablesTextSplit = variablesText.split('\n');
+
+                var undoStackEmpty = (variablesTextSplit[0].trim() === "true");
+                var redoStackEmpty = (variablesTextSplit[1].trim() === "true");
+
+                (undoStackEmpty) ? disableButton(undoButton) : enableButton(undoButton);
+                (redoStackEmpty) ? disableButton(redoButton) : enableButton(redoButton);
+                
+                journalSpace.innerText = journalText;
+            }
 
             function createRequest(event, formData, requestType) {
                 event.preventDefault();
@@ -29,8 +75,10 @@
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', 'get_journal_entries.php');
                 xhr.onload = function() {
-                    journalSpace.innerText = xhr.responseText;
-                    event.target.disabled = false;
+                    updateJournalText(event, xhr.responseText);
+                    if(event.target !== undoButton && event.target !== redoButton) {
+                        event.target.disabled = false;
+                    }
                 }
                 xhr.send(formData);
             }
