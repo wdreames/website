@@ -12,11 +12,17 @@ img {
 	float: right;
 	height: auto;
 	padding-left: 20px;
+	padding-right: 5px;
 }
 
 #aws-logo {
 	width: 15%;
 	min-width: 120px;
+}
+
+#chrome-extension {
+	width: 40%;
+	min-width: 180px;
 }
 
 #hive-board-game {

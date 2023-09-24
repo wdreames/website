@@ -28,6 +28,7 @@
                 This page contains a list of software development projects that I have worked on. This list includes:
                 <ul id="project-links">
                     <li><a href="#website">This Website</a></li>
+                    <li><a href="#facebook-misinformation-detector">Facebook Misinformation Detector</a></li>
                     <li><a href="#hive">Hive Board Game AI</a></li>
                     <li><a href="#fractals">Making Melodious Music From Fractals</a></li>
                     <li><a href="#class-selector">Automated Course Registration System</a></li>
@@ -47,6 +48,25 @@
             </p>
             <p>
                 The source code for this website can be found <a href="https://github.com/wdreames/website" target="_blank">here</a>.
+            </p>
+        </div>
+
+        <div class="inner-container">
+            <h2 id="facebook-misinformation-detector">Facebook Misinformation Detector</h2>
+            <img src="images/chrome-extension.png" id="chrome-extension">
+            <!-- <img src="images/facebook-logo.png" id="facebook-logo"> -->
+            
+            <p>
+                This project involved developing a Chrome Extension that could read text from Facebook posts, and highlight potential misinformation. The extension was developed using JavaScript.
+            </p>
+            <p>
+                The extension worked by first gathering all the text from a Facebook page as a user scrolled, isolating text from posts, sending the text to a web API I developed to detect misinformation, and then highlighting the text in red if its “truth score” was below a specific threshold.
+            </p>
+            <p>
+                The web API I made utilized a machine learning (ML) algorithm that could process text for misinformation. To implement this, I had to create my own website (this website) with a secure HTTPS connection. The API itself was actually fairly simple, and only required me to create a PHP file that used a GET request to call the ML algorithm stored within the web server. The ML algorithm I used was found <a href="https://github.com/nishitpatel01/Fake_News_Detection" target="_blank">here</a>. The web API endpoint that I developed can be found <a href='https://william-reames.com/facebook-misinformation-detector/check-for-misinfo.php?text=insert%20text%20here' target="_blank">here</a>.
+            </p>
+            <p>
+                After putting it all together, the extension worked very well and was able to successfully highlight potential misinformation within Facebook posts as a user scrolled through a Facebook page. The source code for this project can be found <a href="https://github.com/wdreames/facebook_misinformation_detector" target="_blank">here</a>, and also includes instructions to install and use it yourself.
             </p>
         </div>
 

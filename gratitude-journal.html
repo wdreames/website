@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>William Reames</title>
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/gratitude-journal.css">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=0.8">
+    <script
+        src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+        crossorigin="anonymous">
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const randomEntryForm = document.querySelector('#random-entry-form');
+            const randomEntryButton = document.querySelector('#random-entry-button');
+            const dateSelectionForm = document.querySelector('#date-selection-form');
+            const dateSelectionInput = document.querySelector('#date-selection-input');
+            const dateSelectionButton = document.querySelector('#date-selection-button');
+            const journalSpace = document.getElementById('journal');
+
+            const grayscaleColor = "rgb(190, 190, 190)";
+            const purpleColor = "rgb(240, 191, 255)";
+            const purpleHoverColor = "rgb(202, 152, 216)";
+
+            const undoButton = document.querySelector('#undo-button');
+            const redoButton = document.querySelector('#redo-button');
+            disableButton(undoButton);
+            disableButton(redoButton);
+    
+            // Same as variable used in get_journal_entries.php
+            const outputTextSplitter = "=====================";
+
+            function disableButton(button) {
+                button.style.backgroundColor = grayscaleColor;
+                button.disabled = true;
+
+                button.addEventListener("mouseenter", (event) => {
+                    button.style.backgroundColor = grayscaleColor;
+                });
+                button.addEventListener("mouseleave", (event) => {
+                    button.style.backgroundColor = grayscaleColor;
+                });
+            }
+            
+            function enableButton(button) {
+                button.style.backgroundColor = purpleColor;
+                button.disabled = false;
+
+                button.addEventListener("mouseenter", (event) => {
+                    button.style.backgroundColor = purpleHoverColor;
+                });
+                button.addEventListener("mouseleave", (event) => {
+                    button.style.backgroundColor = purpleColor;
+                });
+            }
+
+            function updateDateSelectionButton(journalText) {
+                var dateInJournal = journalText.split('\n')[0].trim();
+
+                const monthMap = {
+                    "January": 0,
+                    "February": 1,
+                    "March": 2,
+                    "April": 3,
+                    "May": 4,
+                    "June": 5,
+                    "July": 6,
+                    "August": 7,
+                    "September": 8,
+                    "October": 9,
+                    "November": 10,
+                    "December": 11
+                };
+
+                const dateComponents = dateInJournal.split(' ');
+                const month = monthMap[dateComponents[0]];
+                const day = parseInt(dateComponents[1]);
+                const year = parseInt(dateComponents[2]);
+
+                const date = new Date(year, month, day);
+
+                var dateCreatedProperly = !isNaN(date.getTime());
+                if(dateCreatedProperly) {
+                    dateSelectionInput.value = date.toISOString().split('T')[0];
+                }
+            }
+
+            function updateJournalText(event, responseText) {
+                var responseTextSplit = responseText.split(outputTextSplitter);
+                var journalText = responseTextSplit[0].trim();
+                var variablesText = responseTextSplit.pop().trim();
+                var variablesTextSplit = variablesText.split('\n');
+
+                // Check get_journal_entries.php to confirm order of variable outputs
+                var undoStackEmpty = (variablesTextSplit[0].trim() === "true");
+                var redoStackEmpty = (variablesTextSplit[1].trim() === "true");
+
+                (undoStackEmpty) ? disableButton(undoButton) : enableButton(undoButton);
+                (redoStackEmpty) ? disableButton(redoButton) : enableButton(redoButton);
+                
+                journalSpace.innerText = journalText;
+                updateDateSelectionButton(journalText);
+            }
+
+            function createRequest(event, formData, requestType) {
+                event.preventDefault();
+                event.target.disabled = true;
+                formData.append('previous_text', journalSpace.innerText);
+                formData.append('request_type', requestType);
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'get_journal_entries.php');
+                xhr.onload = function() {
+                    updateJournalText(event, xhr.responseText);
+                    if(event.target !== undoButton && event.target !== redoButton) {
+                        event.target.disabled = false;
+                    }
+                }
+                xhr.send(formData);
+            }
+
+            randomEntryButton.addEventListener('click', function(event) {
+                const formData = new FormData(randomEntryForm);
+                createRequest(event, formData, 'random_entry');
+            });
+
+            dateSelectionButton.addEventListener('click', function(event) {
+                const formData = new FormData(dateSelectionForm);
+                createRequest(event, formData, 'date_selection');
+            });
+
+            undoButton.addEventListener('click', function(event) {
+                const formData = new FormData();
+                createRequest(event, formData, 'undo');
+            });
+
+            redoButton.addEventListener('click', function(event) {
+                const formData = new FormData();
+                createRequest(event, formData, 'redo');
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container" id="title">
+        <h1>William's Gratitude Journal</h1>
+    </div>
+
+    <div class="container">
+        <div id="journal">
+            Use the fields and buttons at the bottom of the page to begin searching through my gratitude journal :). I hope you're doing well, future self!
+        </div>
+        <div class="inner-container">
+            <button type="submit" id="undo-button">Previous</button>
+            <button type="submit" id="redo-button">Next</button>
+        </div>
+    </div>
+    <div class="container" id="forms">
+        <div class="container" id="random-entry-container">
+            <form id="random-entry-form" action="get_random_journal_entry.php" method="post">
+                <div class="inner-container">
+                    <label>Keywords: </label><input type="text" name="keywords">
+                </div>
+                <div class="inner-container">
+                    <label>Start Date: </label><input type="date" name="start_date">
+                    <label>End Date: </label><input type="date" name="end_date">
+                </div>
+                <div class="inner-container">
+                    <button type="submit" id="random-entry-button">Find Random Journal Entry</button>
+                </div>
+            </form>
+        </div>
+        <div class="container" id="date-selection-container">
+            <form id="date-selection-form" action="get_journal_entries_on_date.php" method="post">
+                <div class="inner-container" id="date-input">
+                    <label>Date: </label><input type="date" name="date" id="date-selection-input">
+                </div>
+                <div class="inner-container">
+                    <button type="submit" id="date-selection-button">Get Entries from Date</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
