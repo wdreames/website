@@ -17,8 +17,8 @@
             const dateSelectionForm = document.querySelector('#date-selection-form');
             const dateSelectionInput = document.querySelector('#date-selection-input');
             const dateSelectionButton = document.querySelector('#date-selection-button');
-            const datePreviousButton = document.querySelector('#date-previous-button');
-            const dateNextButton = document.querySelector('#date-next-button');
+            const dateDecrementButton = document.querySelector('#date-decrement-button');
+            const dateIncrementButton = document.querySelector('#date-increment-button');
             const journalSpace = document.getElementById('journal');
 
             const grayscaleColor = "rgb(190, 190, 190)";
@@ -142,7 +142,7 @@
                 createRequest(event, formData, 'date_selection');
             });
 
-            datePreviousButton.addEventListener('click', function(event) {
+            dateDecrementButton.addEventListener('click', function(event) {
                 event.preventDefault();
                 var date = new Date(dateSelectionInput.value);
                 if(!isNaN(date.getDate())) {
@@ -151,7 +151,7 @@
                 }
             });
 
-            dateNextButton.addEventListener('click', function(event) {
+            dateIncrementButton.addEventListener('click', function(event) {
                 event.preventDefault();
                 var date = new Date(dateSelectionInput.value);
                 if(!isNaN(date.getDate())) {
@@ -195,9 +195,9 @@
             <form id="date-selection-form" action="get_journal_entries_on_date.php" method="post">
                 <div class="inner-container" id="date-input">
                     <label>Date: </label>
-                    <button type="submit" id="date-previous-button" class="date-increment">&lt;</button>
+                    <button type="submit" id="date-decrement-button" class="date-change">&lt;</button>
                     <input type="date" name="date" id="date-selection-input">
-                    <button type="submit" id="date-next-button" class="date-increment">&gt;</button>
+                    <button type="submit" id="date-increment-button" class="date-change">&gt;</button>
                 </div>
                 <div class="inner-container">
                     <button type="submit" id="date-selection-button">Get Entries from Date</button>
