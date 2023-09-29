@@ -19,7 +19,7 @@ body {
 }
 
 #journal-container {
-    flex-grow: 0.8;
+    flex-grow: 0.7;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -97,9 +97,9 @@ input[type="text"] {
 If the screen is wide enough, the two forms will move side-by-side
 */
 @media screen and (min-width: 920px){
-    /* #journal{
-        height: 36vh;
-    } */
+    #journal-container{
+        flex-grow: 1;
+    }
     #forms.container {
         width: 80%;
         margin-top: 12px;
