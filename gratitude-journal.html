@@ -17,6 +17,8 @@
             const dateSelectionForm = document.querySelector('#date-selection-form');
             const dateSelectionInput = document.querySelector('#date-selection-input');
             const dateSelectionButton = document.querySelector('#date-selection-button');
+            const datePreviousButton = document.querySelector('#date-previous-button');
+            const dateNextButton = document.querySelector('#date-next-button');
             const journalSpace = document.getElementById('journal');
 
             const grayscaleColor = "rgb(190, 190, 190)";
@@ -125,11 +127,6 @@
                 createRequest(event, formData, 'random_entry');
             });
 
-            dateSelectionButton.addEventListener('click', function(event) {
-                const formData = new FormData(dateSelectionForm);
-                createRequest(event, formData, 'date_selection');
-            });
-
             undoButton.addEventListener('click', function(event) {
                 const formData = new FormData();
                 createRequest(event, formData, 'undo');
@@ -138,6 +135,29 @@
             redoButton.addEventListener('click', function(event) {
                 const formData = new FormData();
                 createRequest(event, formData, 'redo');
+            });
+
+            dateSelectionButton.addEventListener('click', function(event) {
+                const formData = new FormData(dateSelectionForm);
+                createRequest(event, formData, 'date_selection');
+            });
+
+            datePreviousButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                var date = new Date(dateSelectionInput.value);
+                if(!isNaN(date.getDate())) {
+                    date.setDate(date.getDate() - 1);
+                    dateSelectionInput.value = date.toISOString().split('T')[0];
+                }
+            });
+
+            dateNextButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                var date = new Date(dateSelectionInput.value);
+                if(!isNaN(date.getDate())) {
+                    date.setDate(date.getDate() + 1);
+                    dateSelectionInput.value = date.toISOString().split('T')[0];
+                }
             });
         });
     </script>
@@ -174,7 +194,10 @@
         <div class="container" id="date-selection-container">
             <form id="date-selection-form" action="get_journal_entries_on_date.php" method="post">
                 <div class="inner-container" id="date-input">
-                    <label>Date: </label><input type="date" name="date" id="date-selection-input">
+                    <label>Date: </label>
+                    <button type="submit" id="date-previous-button" class="date-increment">&lt;</button>
+                    <input type="date" name="date" id="date-selection-input">
+                    <button type="submit" id="date-next-button" class="date-increment">&gt;</button>
                 </div>
                 <div class="inner-container">
                     <button type="submit" id="date-selection-button">Get Entries from Date</button>

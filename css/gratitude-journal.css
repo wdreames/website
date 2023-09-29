@@ -37,11 +37,15 @@ form {
     text-align: center;
 }
 
-#date-form{
+/* #date-selection-form{
     margin-bottom: 3vh;
+} */
+
+button.date-increment{
+    padding: 1px 6px;
 }
 
-button[type="submit"]{
+button{
     background-color: rgb(240, 191, 255);
     border-color: black;
     color: black;
@@ -54,7 +58,7 @@ button[type="submit"]{
     margin: 12px;
 }
 
-button[type="submit"]:hover {
+button:hover {
     background-color: rgb(202, 152, 216);
 }
 
