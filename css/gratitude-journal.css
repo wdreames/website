@@ -19,7 +19,7 @@ body {
 }
 
 #journal-container {
-    flex: 0.7;
+    flex: 0.75;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -30,7 +30,6 @@ body {
 }
 
 #journal {
-    /* height: 36vh; */
     flex: 1;
     overflow: auto;
     padding: 10px;
