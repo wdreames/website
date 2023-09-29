@@ -18,8 +18,20 @@ body {
     font-family: Snell Roundhand, cursive;
 }
 
+#journal-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#journal-container .inner-container {
+    width: 100%;
+}
+
 #journal {
-    height: 36vh;
+    /* height: 36vh; */
+    flex-grow: 1;
     overflow: auto;
     padding: 10px;
 }
@@ -85,9 +97,9 @@ input[type="text"] {
 If the screen is wide enough, the two forms will move side-by-side
 */
 @media screen and (min-width: 920px){
-    #journal{
-        height: 48vh;
-    }
+    /* #journal{
+        height: 36vh;
+    } */
     #forms.container {
         width: 80%;
         margin-top: 12px;
