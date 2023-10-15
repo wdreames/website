@@ -18,8 +18,19 @@ body {
     font-family: Snell Roundhand, cursive;
 }
 
+#journal-container {
+    flex: 0.75;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#journal-container .inner-container {
+    width: 100%;
+}
+
 #journal {
-    height: 36vh;
+    flex: 1;
     overflow: auto;
     padding: 10px;
 }
@@ -37,11 +48,15 @@ form {
     text-align: center;
 }
 
-#date-form{
+/* #date-selection-form{
     margin-bottom: 3vh;
+} */
+
+button.date-change{
+    padding: 1px 6px;
 }
 
-button[type="submit"]{
+button{
     background-color: rgb(240, 191, 255);
     border-color: black;
     color: black;
@@ -54,7 +69,7 @@ button[type="submit"]{
     margin: 12px;
 }
 
-button[type="submit"]:hover {
+button:hover {
     background-color: rgb(202, 152, 216);
 }
 
@@ -81,8 +96,8 @@ input[type="text"] {
 If the screen is wide enough, the two forms will move side-by-side
 */
 @media screen and (min-width: 920px){
-    #journal{
-        height: 48vh;
+    #journal-container{
+        flex: 1;
     }
     #forms.container {
         width: 80%;
