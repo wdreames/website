@@ -4,6 +4,7 @@ require_once("vendor/autoload.php");
 use \Ds\Stack;
 
 // global variables
+$authentication_test = "authentication_test";
 $random_entry = "random_entry";
 $date_selection = "date_selection";
 $undo = "undo";
@@ -60,10 +61,6 @@ class GetJournalEntry implements Command {
     }
 }
 
-// Wait to do this until I'm running it on my Linux server
-// $undoStack  //initialized using PHP session
-// $redoStack  //initialized using PHP session
-
 function surroundKeywordsInQuotes($keywordString) {
     $keywordArray = explode(" ", $keywordString);
     $keywordArrayWithQuotes = array_map(
@@ -80,23 +77,23 @@ function getRandomEntryCommand($previous_text) {
 
     $parameters = $random_entry;
 
-    if(isset($_POST[$keywords_parameter])){ 
+    if (isset($_POST[$keywords_parameter])){ 
         $keywords = surroundKeywordsInQuotes($_POST[$keywords_parameter]);
     }
-    if(isset($_POST[$start_date_parameter])){
+    if (isset($_POST[$start_date_parameter])){
         $start_date = $_POST[$start_date_parameter];
     }
-    if(isset($_POST[$end_date_parameter])){
+    if (isset($_POST[$end_date_parameter])){
         $end_date = $_POST[$end_date_parameter];
     }    
     
-    if(isset($keywords) && "" != trim($keywords)){
+    if (isset($keywords) && "" != trim($keywords)){
         $parameters = $parameters . " --keywords " . $keywords;
     }
-    if(isset($start_date) && "" != trim($start_date)){
+    if (isset($start_date) && "" != trim($start_date)){
         $parameters = $parameters . " --start_date " . $start_date;
     }
-    if(isset($end_date) && "" != trim($end_date)){
+    if (isset($end_date) && "" != trim($end_date)){
         $parameters = $parameters . " --end_date " . $end_date;
     }
 
@@ -108,11 +105,11 @@ function getDateSelectionCommand($previous_text) {
 
     $parameters = $date_selection;
 
-    if(isset($_POST[$date_parameter])){
+    if (isset($_POST[$date_parameter])){
         $date = $_POST[$date_parameter];
     }
 
-    if(isset($date) && "" != trim($date)){
+    if (isset($date) && "" != trim($date)){
         $parameters = $parameters . " --date " . $date;
     }
 
@@ -120,9 +117,10 @@ function getDateSelectionCommand($previous_text) {
 }
 
 function handleRequest($request_type, $previous_text) {
-    global $random_entry, $date_selection, $undo, $redo, $undo_stack, $redo_stack, $default_journal_message;
+    global $authentication_test, $random_entry, $date_selection, $undo, $redo, $undo_stack, $redo_stack, $default_journal_message;
 
     $request_type_options = [
+        $authentication_test,
         $random_entry,
         $date_selection,
         $undo,
@@ -131,13 +129,19 @@ function handleRequest($request_type, $previous_text) {
 
     $request_type_options_str = implode(', ', $request_type_options);
     $error_str = "ERROR: Invalid request type: '$request_type'. Available options are: $request_type_options_str.";
-    if(!in_array($request_type, $request_type_options)) {
+    if (!in_array($request_type, $request_type_options)) {
         echo "$error_str";
+        http_response_code(400);
         return;
     }
 
-    if($request_type == $undo) {
-        if($undo_stack->isEmpty()){
+    http_response_code(200);
+    if ($request_type == $authentication_test) {
+        echo "Authentication successful.";
+        return;
+    }
+    if ($request_type == $undo) {
+        if ($undo_stack->isEmpty()){
             echo "$default_journal_message";
             return;
         }
@@ -146,8 +150,8 @@ function handleRequest($request_type, $previous_text) {
         $redo_stack->push($command);
         return;
     }
-    if($request_type == $redo) {
-        if($redo_stack->isEmpty()){
+    if ($request_type == $redo) {
+        if ($redo_stack->isEmpty()){
             echo "$default_journal_message";
             return;
         }
@@ -157,10 +161,10 @@ function handleRequest($request_type, $previous_text) {
         return;
     }
 
-    if($request_type == $random_entry) {
+    if ($request_type == $random_entry) {
         $command = getRandomEntryCommand($previous_text);
     }
-    elseif($request_type == $date_selection) {
+    elseif ($request_type == $date_selection) {
         $command = GetDateSelectionCommand($previous_text);
     }
     else {
@@ -177,21 +181,52 @@ function main() {
     global $request_type_parameter, $previous_text_parameter, $undo_stack, $redo_stack, $output_text_splitter;
 
     session_start();
-    if(isset($_SESSION['undo_stack'])){
+
+    // TODO: Make this better
+    $MAX_NUM_ATTEMPTS = 3;
+    $num_failed_attempts = 0;
+    if (isset($_SESSION['num_failed_attempts'])) {
+        $num_failed_attempts = unserialize($_SESSION['num_failed_attempts']);
+    }
+    if ($num_failed_attempts >= $MAX_NUM_ATTEMPTS) {
+        echo "ERROR: Too many failed authentication attempts.";
+        http_response_code(429);
+        exit;
+    }
+
+    // Use `echo -n '{token}' > ../.gratitude-token` to set the token value
+    $pass_file = fopen('../.gratitude-token', 'r');
+    $expected_hash = fread($pass_file, filesize('../.gratitude-token'));
+    fclose($pass_file);
+
+    if (!isset($_POST['token'])) {
+        echo "ERROR: Unauthorized access. No token was provided.";
+        http_response_code(401);
+        exit;
+    }
+    if (!password_verify($_POST['token'], $expected_hash)) {
+        echo "ERROR: Unauthorized access. Token was invalid.";
+        $num_failed_attempts += 1;
+        $_SESSION['num_failed_attempts'] = serialize($num_failed_attempts);
+        http_response_code(401);
+        exit;
+    }
+    
+    if (isset($_SESSION['undo_stack'])){
         $undo_stack = unserialize($_SESSION['undo_stack']);
     }
-    if(isset($_SESSION['redo_stack'])){
+    if (isset($_SESSION['redo_stack'])){
         $redo_stack = unserialize($_SESSION['redo_stack']);
     }
 
-    if(isset($_POST[$request_type_parameter])){
+    if (isset($_POST[$request_type_parameter])){
         $request_type = $_POST[$request_type_parameter];
     }
     else {
         $request_type = "";
     }
     
-    if(isset($_POST[$previous_text_parameter])){
+    if (isset($_POST[$previous_text_parameter])){
         $previous_text = $_POST[$previous_text_parameter];
     }
     else {

@@ -18,6 +18,26 @@ body {
     font-family: Snell Roundhand, cursive;
 }
 
+#authentication {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+#authentication-form {
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    background-color: rgba(255,255,255);
+    z-index: -1;
+    padding: 12px;
+
+    transform: translate(-50%, 0);
+}
+
 #journal-container {
     flex: 0.75;
     display: flex;

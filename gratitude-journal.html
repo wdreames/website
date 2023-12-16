@@ -12,14 +12,19 @@
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const randomEntryForm = document.querySelector('#random-entry-form');
-            const randomEntryButton = document.querySelector('#random-entry-button');
-            const dateSelectionForm = document.querySelector('#date-selection-form');
-            const dateSelectionInput = document.querySelector('#date-selection-input');
-            const dateSelectionButton = document.querySelector('#date-selection-button');
-            const dateDecrementButton = document.querySelector('#date-decrement-button');
-            const dateIncrementButton = document.querySelector('#date-increment-button');
-            const journalSpace = document.getElementById('journal');
+            const outputTextSplitter   = "=====================";
+            const authenticationDiv    = document.querySelector('#authentication');
+            const authenticationInput  = document.querySelector('#authentication-input');
+            const authenticationButton = document.querySelector('#authentication-button');
+            var   authenticationToken  = "";
+            const randomEntryForm      = document.querySelector('#random-entry-form');
+            const randomEntryButton    = document.querySelector('#random-entry-button');
+            const dateSelectionForm    = document.querySelector('#date-selection-form');
+            const dateSelectionInput   = document.querySelector('#date-selection-input');
+            const dateSelectionButton  = document.querySelector('#date-selection-button');
+            const dateDecrementButton  = document.querySelector('#date-decrement-button');
+            const dateIncrementButton  = document.querySelector('#date-increment-button');
+            const journalSpace         = document.getElementById('journal');
 
             const grayscaleColor = "rgb(190, 190, 190)";
             const purpleColor = "rgb(240, 191, 255)";
@@ -29,9 +34,6 @@
             const redoButton = document.querySelector('#redo-button');
             disableButton(undoButton);
             disableButton(redoButton);
-    
-            // Same as variable used in get_journal_entries.php
-            const outputTextSplitter = "=====================";
 
             function disableButton(button) {
                 button.style.backgroundColor = grayscaleColor;
@@ -110,10 +112,12 @@
                 event.target.disabled = true;
                 formData.append('previous_text', journalSpace.innerText);
                 formData.append('request_type', requestType);
+                formData.append('token', authenticationToken);
 
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', 'get_journal_entries.php');
                 xhr.onload = function() {
+                    console.log(xhr.responseText);
                     updateJournalText(event, xhr.responseText);
                     if(event.target !== undoButton && event.target !== redoButton) {
                         event.target.disabled = false;
@@ -159,12 +163,47 @@
                     dateSelectionInput.value = date.toISOString().split('T')[0];
                 }
             });
+
+            authenticationButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                authenticationToken = authenticationInput.value;
+                authenticationInput.value = "";
+
+                const formData = new FormData();
+                formData.append('request_type', 'authentication_test');
+                formData.append('token', authenticationToken)
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'get_journal_entries.php');
+                xhr.onload = function() {
+                    if(xhr.status == 200) {
+                        authenticationDiv.style.display = "none";
+                    }
+                    else {
+                        var error_str = '';
+                        error_str += 'Invalid token. Please try again.\n';
+                        error_str += xhr.status;
+                        error_str += ' ';
+                        error_str += xhr.responseText;
+                        alert(error_str);
+                    }
+                    console.log(xhr.responseText);
+                }
+                xhr.send(formData);
+            });
         });
     </script>
 </head>
 <body>
     <div class="container" id="title">
         <h1>William's Gratitude Journal</h1>
+    </div>
+
+    <div id="authentication">
+        <form id="authentication-form">
+            <label>Authentication Token: </label><input type="password" name="authentication-token" id="authentication-input">
+            <button type="submit" id="authentication-button">Submit</button>
+        </form>
     </div>
 
     <div class="container" id="journal-container">
