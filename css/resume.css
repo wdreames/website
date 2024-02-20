@@ -1,5 +1,16 @@
-.resume{
-    width: 100%;
-    height: 90vh;
-    min-height: 500px;
+img.resume{
+    width: 98%;
+    max-width: 980px;
+    /* min-width: 350px; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+
+    background-color: #777;
+    padding: min(1%, 10px);
+}
+
+.inner-container {
+    overflow: scroll;
 }
