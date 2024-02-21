@@ -1,1 +1,0 @@
-IDRViewer.config = {"pagecount":2,"title":"William Reames Resume 10/12/22","author":"","subject":"","keywords":"","creator":"","producer":"Skia/PDF m110 Google Docs Renderer","creationdate":"","moddate":"","trapped":"","fileName":"William_Reames_Resume_10_12_22.pdf","bounds":[[935,1210],[935,1210]],"bookmarks":[],"thumbnailType":"jpg","pageType":"html","pageLabels":[]};

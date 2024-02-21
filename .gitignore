@@ -4,3 +4,4 @@ PHPMailer
 PHPMailer/*
 vendor/*
 composer.*
+.DS_Store

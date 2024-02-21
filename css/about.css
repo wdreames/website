@@ -2,13 +2,24 @@
     text-align: left;
 }
 
-#headshot{
+#collage{
     float: right;
-    width: 35%;
+    width: max(50%, 500px);
+    max-width: 871px;
     padding-left: 20px;
 }
 
-#headshot img{
+#collage img{
     width: 100%;
     height:auto;
+}
+
+@media screen and (max-width: 910px){
+    #collage {
+        width: min(100%, 500px);
+        padding-left: 0px;
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }

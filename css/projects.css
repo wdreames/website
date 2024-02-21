@@ -20,6 +20,11 @@ img {
 	min-width: 120px;
 }
 
+#duchess {
+	width: 40%;
+	min-width: 240px;
+}
+
 #chrome-extension {
 	width: 40%;
 	min-width: 180px;
