@@ -24,7 +24,7 @@ body{
 #header-name{
     font-size: 28px;
     font-weight: bold;
-    font-family: Snell Roundhand, cursive, Brush Script MT, Brush Script Std;
+    font-family: Snell Roundhand, Brush Script MT, Brush Script Std, cursive;
     margin-top: 0;
     margin-bottom: 0;
 }
