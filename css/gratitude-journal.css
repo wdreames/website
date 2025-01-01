@@ -15,7 +15,7 @@ body {
 #title h1 {
     font-size: min(48px, max(8px, 5vw));
     font-weight: bold;
-    font-family: Snell Roundhand, cursive;
+    font-family: Snell Roundhand, Brush Script MT, cursive;
 }
 
 #authentication {

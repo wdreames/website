@@ -5,7 +5,7 @@
 #collage{
     float: right;
     width: max(50%, 500px);
-    max-width: 871px;
+    max-width: 500px;
     padding-left: 20px;
 }
 

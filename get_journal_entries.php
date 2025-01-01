@@ -11,7 +11,7 @@ $undo = "undo";
 $redo = "redo";
 $request_type_parameter = "request_type";
 $previous_text_parameter = "previous_text";
-$keywords_parameter = "keywords";
+$query_parameter = "keywords";
 $start_date_parameter = "start_date";
 $end_date_parameter = "end_date";
 $date_parameter = "date";
@@ -61,24 +61,13 @@ class GetJournalEntry implements Command {
     }
 }
 
-function surroundKeywordsInQuotes($keywordString) {
-    $keywordArray = explode(" ", $keywordString);
-    $keywordArrayWithQuotes = array_map(
-        function ($word) {
-            return '"' . $word . '"';
-        }, 
-        $keywordArray
-    );
-    return implode(" ", $keywordArrayWithQuotes);
-}
-
 function getRandomEntryCommand($previous_text) {
-    global $random_entry, $keywords_parameter, $start_date_parameter, $end_date_parameter;
+    global $random_entry, $query_parameter, $start_date_parameter, $end_date_parameter;
 
     $parameters = $random_entry;
 
-    if (isset($_POST[$keywords_parameter])){ 
-        $keywords = surroundKeywordsInQuotes($_POST[$keywords_parameter]);
+    if (isset($_POST[$query_parameter])){ 
+        $query = '"' . $_POST[$query_parameter] . '"';
     }
     if (isset($_POST[$start_date_parameter])){
         $start_date = $_POST[$start_date_parameter];
@@ -87,8 +76,8 @@ function getRandomEntryCommand($previous_text) {
         $end_date = $_POST[$end_date_parameter];
     }    
     
-    if (isset($keywords) && "" != trim($keywords)){
-        $parameters = $parameters . " --keywords " . $keywords;
+    if (isset($query) && "" != trim($query)){
+        $parameters = $parameters . " --query " . $query;
     }
     if (isset($start_date) && "" != trim($start_date)){
         $parameters = $parameters . " --start_date " . $start_date;
