@@ -58,16 +58,3 @@
         ```
     * Run this command: `systemctl restart apache2`
 
-
-
-## Setting up the Gratitude Journal backend
-
-* Install php (specific command may be different)
-    ```
-    sudo apt install php-8.3
-    ```
-* Clone the gratitude journal analysis repo into `/var/www`
-    ```
-    git clone git@github.com:wdreames/gratitude_journal_analysis.git
-    ```
-* Somehow fix the issue with Ds/Store not working... idk :/

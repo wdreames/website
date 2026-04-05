@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# 1. Remove .html from the address bar (Redirect)
+# This turns ://example.com into ://example.com
+RewriteCond %{THE_REQUEST} \.html\s
+RewriteRule ^(.+)\.html$ /$1 [R=301,L]
+
+# 2. Map extensionless requests back to .html files (Internal Rewrite)
+# If the file exists with .html, serve it without changing the URL
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [L]

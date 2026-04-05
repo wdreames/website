@@ -1,4 +1,3 @@
-.htaccess
 *.code-workspace
 PHPMailer
 PHPMailer/*
