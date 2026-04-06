@@ -4,5 +4,6 @@ python-multipart
 authlib
 python-jose[cryptography]
 pydantic
+pydantic-settings
 redis
 passlib[bcrypt]

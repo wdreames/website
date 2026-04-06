@@ -5,28 +5,40 @@ from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from config import settings
+import bcrypt
 import hashlib
-import os
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["bcrypt_sha256"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login")
 
 # Simple in-memory rate limiting (for demo; use Redis in production)
 failed_attempts = {}
 
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+def get_prehashed_password(password: str) -> bytes:
+    """Pre-hashes the password using SHA-256 to bypass bcrypt's 72-character limit."""
+    # Convert password to bytes and hash it
+    sha256_hash = hashlib.sha256(password.encode('utf-8')).digest()
+    return sha256_hash
 
-def get_password_hash(password: str) -> str:
-    return pwd_context.hash(password)
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    pre_hashed = get_prehashed_password(plain_password)
+    return bcrypt.checkpw(pre_hashed, hashed_password)
+    # return pwd_context.verify(pre_hashed, hashed_password)
+
+def get_password_hash(plain_password: str) -> str:
+    pre_hashed = get_prehashed_password(plain_password)
+    return bcrypt.hashpw(pre_hashed, bcrypt.gensalt())
+    # return pwd_context.hash(pre_hashed)
 
 def authenticate_user(username: str, password: str) -> Optional[str]:
-    # For simplicity, username is ignored, password is checked against token file
+    # TODO: For simplicity, username is ignored, password is checked against token file
     if username != "wreames":  # Fixed username
         return None
     try:
+        # TODO: Usernames and passwords should eventually be stored in a database
         with open(settings.token_file_path, "r") as f:
-            hashed_token = f.read().strip()
+            hashed_token = f.read().strip().encode('utf-8')
+            print(f"hashed token: {hashed_token}")  # TODO Remove Debugging line
         if verify_password(password, hashed_token):
             return username
     except FileNotFoundError:
@@ -36,7 +48,7 @@ def authenticate_user(username: str, password: str) -> Optional[str]:
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = datetime.utcnow() + expires_delta  # TODO: Fix deprecated usage
     else:
         expire = datetime.utcnow() + timedelta(hours=settings.jwt_expiration_hours)
     to_encode.update({"exp": expire})

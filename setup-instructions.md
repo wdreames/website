@@ -58,3 +58,43 @@
         ```
     * Run this command: `systemctl restart apache2`
 
+## Setting up the Gratitude Journal API
+
+### Redis Configuration
+* Install redis: `sudo apt install redis-server`
+* Start redis: `sudo systemctl enable --now redis-server`
+* Test that it is running: `redis-cli ping`
+* Make changes to config:
+    ```
+    redis-cli
+    CONFIG SET supervised systemd  # This might not work. Can be edited directly in `/etc/redis/redis.conf`
+    CONFIG SET requirepass "insert-password-here"
+    CONFIG REWRITE
+    ```
+
+### Environment Variables
+* `export JWT_SECRET_KEY="$(openssl rand --base64 32)"`
+* `export REDIS_URL="redis://default:<insert-password-here>@localhost:6379"`
+
+### Python Setup
+* Install packages
+    ```
+    cd gratitude_journal_api
+    uv init
+    uv add -r requirements.txt
+    ```
+* Create the security token (TODO: This should eventually be replaced with a DB users table)
+    ```
+    python3 create_hash.py <insert-secret-here>
+    ```
+* Start the API server
+    ```
+    uvicorn main:app --reload --host 127.0.0.1 --port 8000
+    ```
+* Test out the API (optional)
+    ```
+    curl -s -X POST http://127.0.0.1:8000/api/auth/login \
+        -H "Content-Type: application/json" \
+        -d '{"username":"wreames","password":"<insert-secret-here>"}'
+    ```
+
