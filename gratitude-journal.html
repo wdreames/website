@@ -14,7 +14,8 @@
         document.addEventListener("DOMContentLoaded", function() {
             const outputTextSplitter   = "=====================";
             const authenticationDiv    = document.querySelector('#authentication');
-            const authenticationInput  = document.querySelector('#authentication-input');
+            const usernameInput        = document.querySelector('#username-input');
+            const passwordInput        = document.querySelector('#password-input');
             const authenticationButton = document.querySelector('#authentication-button');
             var   authenticationToken  = "";
             const randomEntryForm      = document.querySelector('#random-entry-form');
@@ -107,43 +108,106 @@
                 updateDateSelectionButton(journalText);
             }
 
-            function createRequest(event, formData, requestType) {
-                event.preventDefault();
-                event.target.disabled = true;
-                formData.append('previous_text', journalSpace.innerText);
-                formData.append('request_type', requestType);
-                formData.append('token', authenticationToken);
-
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'get_journal_entries.php');
-                xhr.onload = function() {
-                    console.log(xhr.responseText);
-                    updateJournalText(event, xhr.responseText);
-                    if(event.target !== undoButton && event.target !== redoButton) {
-                        event.target.disabled = false;
+            function makeAPIRequest(endpoint, body) {
+                return fetch(`http://127.0.0.1:8000${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authenticationToken}`
+                    },
+                    body: JSON.stringify(body)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error(`Request failed: ${response.status}`);
                     }
-                }
-                xhr.send(formData);
+                });
+            }
+
+            function updateJournalText(response) {
+                journalSpace.innerText = response.journal_text;
+                updateDateSelectionButton(response.journal_text);
+                response.undo_stack_empty ? disableButton(undoButton) : enableButton(undoButton);
+                response.redo_stack_empty ? disableButton(redoButton) : enableButton(redoButton);
             }
 
             randomEntryButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.target.disabled = true;
                 const formData = new FormData(randomEntryForm);
-                createRequest(event, formData, 'random_entry');
+                const keywords = formData.get('keywords') || null;
+                const startDate = formData.get('start_date') || null;
+                const endDate = formData.get('end_date') || null;
+                const body = {
+                    keywords: keywords,
+                    start_date: startDate,
+                    end_date: endDate,
+                    previous_text: journalSpace.innerText
+                };
+                makeAPIRequest('/api/journal/random-entry', body)
+                .then(response => {
+                    updateJournalText(response);
+                    event.target.disabled = false;
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                    event.target.disabled = false;
+                });
             });
 
             undoButton.addEventListener('click', function(event) {
-                const formData = new FormData();
-                createRequest(event, formData, 'undo');
+                event.preventDefault();
+                const body = {
+                    previous_text: journalSpace.innerText
+                };
+                makeAPIRequest('/api/journal/undo', body)
+                .then(response => {
+                    updateJournalText(response);
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                });
             });
 
             redoButton.addEventListener('click', function(event) {
-                const formData = new FormData();
-                createRequest(event, formData, 'redo');
+                event.preventDefault();
+                const body = {
+                    previous_text: journalSpace.innerText
+                };
+                makeAPIRequest('/api/journal/redo', body)
+                .then(response => {
+                    updateJournalText(response);
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                });
             });
 
             dateSelectionButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.target.disabled = true;
                 const formData = new FormData(dateSelectionForm);
-                createRequest(event, formData, 'date_selection');
+                const dateValue = formData.get('date');
+                if (!dateValue) {
+                    alert('Please select a date.');
+                    event.target.disabled = false;
+                    return;
+                }
+                const body = {
+                    date: dateValue,
+                    previous_text: journalSpace.innerText
+                };
+                makeAPIRequest('/api/journal/date-selection', body)
+                .then(response => {
+                    updateJournalText(response);
+                    event.target.disabled = false;
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                    event.target.disabled = false;
+                });
             });
 
             dateDecrementButton.addEventListener('click', function(event) {
@@ -166,30 +230,36 @@
 
             authenticationButton.addEventListener('click', function(event) {
                 event.preventDefault();
-                authenticationToken = authenticationInput.value;
-                authenticationInput.value = "";
+                const username = usernameInput.value;
+                const password = passwordInput.value;
+                usernameInput.value = "";
+                passwordInput.value = "";
 
-                const formData = new FormData();
-                formData.append('request_type', 'authentication_test');
-                formData.append('token', authenticationToken)
-
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'get_journal_entries.php');
-                xhr.onload = function() {
-                    if(xhr.status == 200) {
-                        authenticationDiv.style.display = "none";
+                fetch('http://127.0.0.1:8000/api/journal/authorization', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Login failed');
                     }
-                    else {
-                        var error_str = '';
-                        error_str += 'Invalid token. Please try again.\n';
-                        error_str += xhr.status;
-                        error_str += ' ';
-                        error_str += xhr.responseText;
-                        alert(error_str);
-                    }
-                    console.log(xhr.responseText);
-                }
-                xhr.send(formData);
+                })
+                .then(data => {
+                    authenticationToken = data.access_token;
+                    authenticationDiv.style.display = "none";
+                })
+                .catch(error => {
+                    alert('Invalid credentials. Please try again.');
+                    console.error('Error:', error);
+                });
             });
         });
     </script>
@@ -201,8 +271,13 @@
 
     <div id="authentication">
         <form id="authentication-form">
-            <label>Authentication Token: </label><input type="password" name="authentication-token" id="authentication-input">
-            <button type="submit" id="authentication-button">Submit</button>
+            <div class="inner-container">
+                <label>Username: </label><input type="text" name="username" id="username-input">
+            </div>
+            <div class="inner-container">
+                <label>Password: </label><input type="password" name="password" id="password-input">
+            </div>
+            <button type="submit" id="authentication-button">Login</button>
         </form>
     </div>
 
