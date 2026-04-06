@@ -1,7 +1,7 @@
 RewriteEngine On
 
 # 1. Remove .html from the address bar (Redirect)
-# This turns ://example.com into ://example.com
+# This turns ://example.com/sample-page.html into ://example.com/sample-page
 RewriteCond %{THE_REQUEST} \.html\s
 RewriteRule ^(.+)\.html$ /$1 [R=301,L]
 
