@@ -1,10 +1,19 @@
 from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from auth import authenticate_user, create_access_token, get_current_user, check_rate_limit, increment_failed_attempts
 from journal import JournalService, build_parameters
 from models import LoginRequest, TokenResponse, RandomEntryRequest, DateSelectionRequest, UndoRedoRequest, JournalResponse
 from datetime import timedelta
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 @app.post("/api/auth/login", response_model=TokenResponse)
 async def login(request: LoginRequest):

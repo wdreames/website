@@ -81,10 +81,29 @@
     ```
     cd gratitude_journal_api
     uv init
-    uv add -r requirements.txt
+    uv add -r pyproject.toml
+    source .venv/bin/activate
+    ```
+* Clone the journal analysis repo and create the data file
+    ```
+    cd /var/www
+    git clone <repo-ssh-path>
+    cd gratitude_journal_analysis
+    python src/create_df.py
+    ls -l data | grep journal_df.pkl
+    ```
+* Update the global values in `/var/www/gratitude_journal_analysis/src/print_journal.py` to use absolute paths
+    ```python
+    # Global variables
+    base_filepath = '/var/www/gratitude_journal_analysis/data'
+    pickle_filepath = f'{base_filepath}/journal_df.pkl'
+    random_pickle_filepath = f'{base_filepath}/random_journal_df.pkl'
+    random_journal_timer_filepath = f'{base_filepath}/random_journal_time_of_last_use.txt'
+    random_journal_timer_minutes = 10
     ```
 * Create the security token (TODO: This should eventually be replaced with a DB users table)
     ```
+    cd /var/www/html/gratitude_journal_api
     python3 create_hash.py <insert-secret-here>
     ```
 * Start the API server
@@ -97,4 +116,3 @@
         -H "Content-Type: application/json" \
         -d '{"username":"wreames","password":"<insert-secret-here>"}'
     ```
-

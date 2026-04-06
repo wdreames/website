@@ -6,7 +6,6 @@ composer.*
 .DS_Store
 
 .python-version
-pyproject.toml
 uv.lock
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,linux,macos,windows

@@ -19,7 +19,7 @@ class JournalService:
 
     def execute_command(self, parameters: str, previous_text: str) -> str:
         # Call the Python script
-        cmd = f"../gratitude_journal_analysis/env/bin/python ../gratitude_journal_analysis/src/print_journal_entries.py {parameters}"
+        cmd = f"python3 /var/www/gratitude_journal_analysis/src/print_journal_entries.py {parameters}"
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
         if result.returncode != 0:
             raise Exception(f"Script failed: {result.stderr}")
