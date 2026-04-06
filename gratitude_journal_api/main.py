@@ -31,6 +31,9 @@ async def login(request: LoginRequest):
     
     return TokenResponse(access_token=access_token)
 
+# TODO: All of the below endpoints should be GET endpoints.
+# TODO: random-entry and date-selection should be combined into a single endpoint 
+#       that takes in parameters to determine the type of request. 
 @app.post("/api/journal/random-entry", response_model=JournalResponse)
 async def random_entry(request: RandomEntryRequest, current_user: str = Depends(get_current_user)):
     service = JournalService(current_user)

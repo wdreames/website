@@ -1,7 +1,7 @@
 [project]
 name = "gratitude-journal-api"
 version = "0.1.0"
-description = "Add your description here"
+description = "Backend API for retrieving entries from William's gratitude journal"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
