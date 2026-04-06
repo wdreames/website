@@ -12,6 +12,10 @@ class JournalService:
         self.undo_key = f"undo:{user_id}"
         self.redo_key = f"redo:{user_id}"
 
+    def clear_stacks(self):
+        r.delete(self.undo_key)
+        r.delete(self.redo_key)
+
     def get_stacks_status(self) -> Tuple[bool, bool]:
         undo_empty = r.llen(self.undo_key) == 0
         redo_empty = r.llen(self.redo_key) == 0
@@ -19,6 +23,7 @@ class JournalService:
 
     def execute_command(self, parameters: str, previous_text: str) -> str:
         # Call the Python script
+        # TODO: This could be improved to call the method directly rather than use a subprocess command
         cmd = f"python3 /var/www/gratitude_journal_analysis/src/print_journal_entries.py {parameters}"
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
         if result.returncode != 0:

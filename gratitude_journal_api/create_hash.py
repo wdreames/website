@@ -1,6 +1,6 @@
 """Generate a hashed token using passlib's bcrypt_sha256.
 
-Usage: python create_hash.py <token>
+Usage: python create_hash.py <token> > ../../.gratitude-token
 Run once and save the output to ../../.gratitude-token
 """
 

@@ -8,10 +8,9 @@ from config import settings
 import bcrypt
 import hashlib
 
-pwd_context = CryptContext(schemes=["bcrypt_sha256"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login")
 
-# Simple in-memory rate limiting (for demo; use Redis in production)
+# Simple in-memory rate limiting (TODO: for demo; use Redis in production)
 failed_attempts = {}
 
 def get_prehashed_password(password: str) -> bytes:

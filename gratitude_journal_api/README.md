@@ -1,12 +1,10 @@
 # Gratitude Journal API
 
-This is a REST API for retrieving gratitude journal entries, converted from the original PHP implementation.
+This is a REST API for retrieving gratitude journal entries.
 
 ## Setup
 
-1. Install dependencies: `pip install -r requirements.txt`
-2. Set environment variables: `JWT_SECRET_KEY`, `REDIS_URL` (optional, defaults provided)
-3. Run the server: `uvicorn main:app --reload`
+See details outlined in [setup-instructions.md](../setup-instructions.md).
 
 ## Endpoints
 
@@ -17,7 +15,3 @@ This is a REST API for retrieving gratitude journal entries, converted from the 
 - `POST /api/journal/redo`: Redo last action.
 
 All journal endpoints require `Authorization: Bearer <token>` header.
-
-## Migration
-
-Update the frontend to use these endpoints instead of the PHP file.

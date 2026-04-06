@@ -24,6 +24,11 @@ async def login(request: LoginRequest):
             raise HTTPException(status_code=429, detail="Too many failed attempts")
         raise HTTPException(status_code=401, detail="Invalid credentials")
     access_token = create_access_token(data={"sub": user}, expires_delta=timedelta(hours=1))
+    
+    # Clear undo/redo stacks on new login
+    service = JournalService(user)
+    service.clear_stacks()
+    
     return TokenResponse(access_token=access_token)
 
 @app.post("/api/journal/random-entry", response_model=JournalResponse)
