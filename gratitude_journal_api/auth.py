@@ -38,7 +38,6 @@ def authenticate_user(username: str, password: str) -> Optional[str]:
         # TODO: Usernames and passwords should eventually be stored in a database
         with open(settings.token_file_path, "r") as f:
             hashed_token = f.read().strip().encode('utf-8')
-            print(f"hashed token: {hashed_token}")  # TODO Remove Debugging line
         if verify_password(password, hashed_token):
             return username
     except FileNotFoundError:

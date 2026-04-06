@@ -116,3 +116,4 @@
         -H "Content-Type: application/json" \
         -d '{"username":"wreames","password":"<insert-secret-here>"}'
     ```
+* At this point, you should be able to go to `http://127.0.0.1/gratitude-journal` and find that it is working :)

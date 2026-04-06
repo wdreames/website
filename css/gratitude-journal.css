@@ -93,7 +93,7 @@ button:hover {
     background-color: rgb(202, 152, 216);
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"] {
     width: 60%;
     margin: 12px;
     box-sizing: border-box;
