@@ -137,10 +137,13 @@
                 event.preventDefault();
                 event.target.disabled = true;
                 const formData = new FormData(randomEntryForm);
+                const keywords = formData.get('keywords') || null;
+                const startDate = formData.get('start_date') || null;
+                const endDate = formData.get('end_date') || null;
                 const body = {
-                    keywords: formData.get('keywords'),
-                    start_date: formData.get('start_date'),
-                    end_date: formData.get('end_date'),
+                    keywords: keywords,
+                    start_date: startDate,
+                    end_date: endDate,
                     previous_text: journalSpace.innerText
                 };
                 makeAPIRequest('/api/journal/random-entry', body)
@@ -186,8 +189,14 @@
                 event.preventDefault();
                 event.target.disabled = true;
                 const formData = new FormData(dateSelectionForm);
+                const dateValue = formData.get('date');
+                if (!dateValue) {
+                    alert('Please select a date.');
+                    event.target.disabled = false;
+                    return;
+                }
                 const body = {
-                    date: formData.get('date'),
+                    date: dateValue,
                     previous_text: journalSpace.innerText
                 };
                 makeAPIRequest('/api/journal/date-selection', body)
