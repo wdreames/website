@@ -112,7 +112,7 @@
     ```
 * Test out the API (optional)
     ```
-    curl -s -X POST http://127.0.0.1:8000/api/auth/login \
+    curl -s -X POST http://127.0.0.1:8000/api/journal/authorization \
         -H "Content-Type: application/json" \
         -d '{"username":"wreames","password":"<insert-secret-here>"}'
     ```

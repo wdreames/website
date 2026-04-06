@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-@app.post("/api/auth/login", response_model=TokenResponse)
+@app.post("/api/journal/authorization", response_model=TokenResponse)
 async def login(request: LoginRequest):
     user = authenticate_user(request.username, request.password)
     if not user:

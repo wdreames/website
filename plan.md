@@ -46,7 +46,7 @@ I'll use FastAPI for the framework due to its modern async support, automatic Op
 
 #### 4. **Implement Authentication (Updated: OAuth2 with JWT)**
    - **OAuth2 Flow**: Use OAuth2 Resource Owner Password Credentials (ROPC) for simplicity (since it's a personal API), issuing JWT access tokens. For production, consider Authorization Code flow with an external provider (e.g., Google OAuth).
-     - **Login Endpoint**: `POST /api/auth/login` with username/password (migrate from the hashed token file). Returns a JWT token.
+     - **Login Endpoint**: `POST /api/journal/authorization` with username/password (migrate from the hashed token file). Returns a JWT token.
      - **Token Validation**: Protect endpoints with Bearer token in `Authorization` header. Decode and verify JWT on each request.
    - **JWT Details**: Use `python-jose` to encode tokens with expiration (e.g., 1 hour), user ID, and scopes (e.g., "read:journal").
    - **Rate Limiting**: Implement for failed logins (max 3 attempts) using `slowapi` or in-memory tracking.
@@ -57,7 +57,7 @@ I'll use FastAPI for the framework due to its modern async support, automatic Op
    - Base URL: `/api/journal` (or similar).
    - Use POST for all, matching the original, but return JSON. Include `Authorization: Bearer <token>` header.
    - Endpoints:
-     - `POST /api/auth/login`: Authenticate and get token. Body: `{ "username": "string", "password": "string" }`. Response: `{ "access_token": "string", "token_type": "bearer" }`.
+     - `POST /api/journal/authorization`: Authenticate and get token. Body: `{ "username": "string", "password": "string" }`. Response: `{ "access_token": "string", "token_type": "bearer" }`.
      - `POST /api/journal/random-entry`: Fetch random entry. Body: `{ "keywords": "optional", "start_date": "YYYY-MM-DD", "end_date": "YYYY-MM-DD", "previous_text": "string" }`. Response: `{ "journal_text": "string", "undo_stack_empty": bool, "redo_stack_empty": bool }`.
      - `POST /api/journal/date-selection`: Fetch by date. Body: `{ "date": "YYYY-MM-DD", "previous_text": "string" }`. Response: Similar to above.
      - `POST /api/journal/undo`: Undo last action. Body: `{}`. Response: Updated journal text and stack status.
