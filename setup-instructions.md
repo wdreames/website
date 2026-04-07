@@ -31,6 +31,7 @@
     mv website/ html/
     ```
 * Load the site in a browser to make sure it was updated
+* Ensure any required ports are allowed through the firewall (e.g. 80, 443, and 8000)
 
 ## Updating apache2 config files
 * Allowing for URLs without `.html`
@@ -108,11 +109,11 @@
     ```
 * Start the API server
     ```
-    uvicorn main:app --reload --host 127.0.0.1 --port 8000
+    uvicorn main:app --reload --host <IP Address> --port 8000
     ```
 * Test out the API (optional)
     ```
-    curl -s -X POST http://127.0.0.1:8000/api/journal/authorization \
+    curl -s -X POST http://<IP Address>:8000/api/journal/authorization \
         -H "Content-Type: application/json" \
         -d '{"username":"wreames","password":"<insert-secret-here>"}'
     ```

@@ -1,0 +1,47 @@
+<script>
+    $(document).ready(function() {
+        var hamburger = $('.hamburger');
+        var menu = $('.dropdown-menu');
+
+        hamburger.click(function() {
+            menu.toggleClass('active');
+            hamburger.toggleClass('active');
+        });
+
+        $(window).resize(function(){
+            if ($(window).width() > 900){
+                menu.removeClass('active');
+                hamburger.removeClass('active');
+                menu.css('display: inline-block');
+            }
+            else {
+                menu.css('display: block');
+            }
+        })
+    });
+</script>
+
+<div class="gratitude-topnav">
+    <div class='container'>
+        <div class="topnav-left">
+            <p id="header-name">William's Gratitude Journal</p>
+        </div>
+        <div class='topnav-right'>
+            <nav>
+                <div class="hamburger" class="no-right-margin">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="topnav-right-menu">
+                    <li><a href='/gratitude-journal/read'>Journal Reader</a></li>
+                    <li><a href='/gratitude-journal/write'>Journal Editor</a></li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li><a href='/gratitude-journal/read'>Journal Reader</a></li>
+                    <li><a href='/gratitude-journal/write'>Journal Editor</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

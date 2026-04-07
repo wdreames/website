@@ -2,13 +2,18 @@
 <html lang="en">
 <head>
     <title>William Reames</title>
-    <link rel="stylesheet" type="text/css" href="css/base.css">
-    <link rel="stylesheet" type="text/css" href="css/gratitude-journal.css">
+    <link rel="stylesheet" type="text/css" href="/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/css/gratitude-journal.css">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=0.8">
     <script
         src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
         crossorigin="anonymous">
+    </script>
+    <script>
+        $(function(){
+            $('#header').load('/base-html-files/gratitude-header.html');
+        });
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -109,7 +114,7 @@
             }
 
             function makeAPIRequest(endpoint, body) {
-                return fetch(`http://127.0.0.1:8000${endpoint}`, {
+                return fetch(`${window.location.protocol}//${window.location.hostname}:8000${endpoint}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -235,7 +240,7 @@
                 usernameInput.value = "";
                 passwordInput.value = "";
 
-                fetch('http://127.0.0.1:8000/api/journal/authorization', {
+                fetch(`${window.location.protocol}//${window.location.hostname}:8000/api/journal/authorization`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -265,6 +270,8 @@
     </script>
 </head>
 <body>
+    <div id="header"></div>
+    
     <div class="container" id="title">
         <h1>William's Gratitude Journal</h1>
     </div>

@@ -10,3 +10,7 @@ RewriteRule ^(.+)\.html$ /$1 [R=301,L]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f
 RewriteRule ^(.*)$ $1.html [L]
+
+# Redirect /gratitude-journal to /gratitude-journal/read-journal
+RewriteCond %{REQUEST_URI} ^\/gratitude-journal$
+RewriteRule ^(.*)$ /gratitude-journal/read [R=301,L]
