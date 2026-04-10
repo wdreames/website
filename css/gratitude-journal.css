@@ -7,6 +7,53 @@ body {
     height: 100vh;
 }
 
+.gratitude-topnav p {
+    float: left;
+    text-align: center;
+    padding: 8px 12px;
+    margin: 8px 8px;
+    text-decoration: none;
+    font-size: 28px;
+    display: flex;
+    font-weight: bold;
+    font-family: Snell Roundhand, Brush Script MT, cursive;
+}
+
+.gratitude-topnav-left {
+    float: left;
+    margin: 0px;
+    height: 100%;
+    align-items: center;
+}
+
+.gratitude-topnav-right {
+    float: right;
+    margin: 0px;
+    position: relative;
+    height: 100%;
+    align-items: center;
+}
+
+.gratitude-topnav-right-menu{
+    display: flex;
+    list-style: none;
+    padding-left: 10px;
+}
+
+.gratitude-topnav{
+    overflow: hidden;
+    vertical-align: middle;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    background-color: #ffffffc0;
+    margin-top: 12px;
+    margin-bottom: 0;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #title {
     text-align: center;
     margin-bottom: 0;
@@ -76,7 +123,7 @@ button.date-change{
     padding: 1px 6px;
 }
 
-button{
+button, a {
     background-color: rgb(240, 191, 255);
     border-color: black;
     color: black;
@@ -89,11 +136,11 @@ button{
     margin: 12px;
 }
 
-button:hover {
+button:hover, a:hover {
     background-color: rgb(202, 152, 216);
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], a {
     width: 60%;
     margin: 12px;
     box-sizing: border-box;
@@ -134,5 +181,32 @@ If the screen is wide enough, the two forms will move side-by-side
         float: right;
         height: 100%;
         margin-top: 0;
+    }
+}
+
+@media screen and (max-width: 919px){
+    .gratitude-topnav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .gratitude-topnav p {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .gratitude-topnav-left {
+        float: none; /* Remove float to allow flexbox to control layout */
+    }
+    
+    .gratitude-topnav-right {
+        float: none; /* Remove float to allow flexbox to control layout */
+    }
+    
+    .gratitude-topnav-right-menu {
+        justify-content: center; /* Center the navigation items */
+        padding-left: 0; /* Remove left padding for centering */
     }
 }

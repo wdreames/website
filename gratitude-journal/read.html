@@ -11,11 +11,6 @@
         crossorigin="anonymous">
     </script>
     <script>
-        $(function(){
-            $('#header').load('/base-html-files/gratitude-header.html');
-        });
-    </script>
-    <script>
         document.addEventListener("DOMContentLoaded", function() {
             const outputTextSplitter   = "=====================";
             const authenticationDiv    = document.querySelector('#authentication');
@@ -270,8 +265,6 @@
     </script>
 </head>
 <body>
-    <div id="header"></div>
-    
     <div class="container" id="title">
         <h1>William's Gratitude Journal</h1>
     </div>
@@ -325,6 +318,9 @@
                 </div>
             </form>
         </div>
+    </div>
+    <div class="inner-container">
+        <button type="submit" id="page-nav-button">Edit Journal</button>
     </div>
 </body>
 </html>
