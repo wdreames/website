@@ -103,7 +103,7 @@
 * Create the security token (TODO: This should eventually be replaced with a DB users table)
     ```
     cd /var/www/html/gratitude_journal_api
-    python3 create_hash.py $INSERT_SECRET_HERE > ../../gratitude-token
+    python3 create_hash.py $INSERT_SECRET_HERE > ../../.gratitude-token
     ```
 * Start the API server
     ```
