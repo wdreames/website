@@ -80,8 +80,7 @@
 * Install packages
     ```
     cd gratitude_journal_api
-    uv init
-    uv add -r pyproject.toml
+    uv sync
     source .venv/bin/activate
     ```
 * Clone the journal analysis repo and create the data file
@@ -104,7 +103,7 @@
 * Create the security token (TODO: This should eventually be replaced with a DB users table)
     ```
     cd /var/www/html/gratitude_journal_api
-    python3 create_hash.py <insert-secret-here>
+    python3 create_hash.py $INSERT_SECRET_HERE > ../../gratitude-token
     ```
 * Start the API server
     ```
