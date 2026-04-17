@@ -1,0 +1,3 @@
+export JWT_SECRET_KEY="$(openssl rand --base64 32)"
+export REDIS_URL="redis://default:<insert-password-here>@localhost:6379"
+

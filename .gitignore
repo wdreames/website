@@ -5,6 +5,8 @@ vendor/*
 composer.*
 .DS_Store
 
+.envrc
+
 .python-version
 uv.lock
 
