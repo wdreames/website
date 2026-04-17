@@ -116,3 +116,38 @@
         -d '{"username":"wreames","password":"<insert-secret-here>"}'
     ```
 * At this point, you should be able to go to `http://127.0.0.1/gratitude-journal` and find that it is working :)
+
+### Run uvicorn in the background
+The following steps outline how to run uvicorn as a systemctl program that can persist after closing a terminal window
+
+* Make a user for uvicorn: `sudo useradd -r -s /usr/sbin/nologin uvicorn`
+* Add uvicorn to the `admin` group so it can access the website data: `sudo usermod -aG admin uvicorn`
+* Ensure the website folders are under the admin group: `sudo chgrp -R admin .`
+* Run this command and note the value, you will use it in the next step: `openssl rand --base64 32`
+* Add this to `/etc/systemd/system/uvicorn.service`:
+   ```
+   [Unit]
+   Description=Uvicorn FastAPI Application
+   After=network.target
+   
+   [Service]
+   User=uvicorn
+   Group=www-data
+   WorkingDirectory=/var/www/html/gratitude_journal_api
+   ExecStart=/usr/bin/env uvicorn main:app --host 192.168.1.4 --port 8000 --reload --log-level debug
+   Restart=always
+   RestartSec=5
+   Environment="PATH=/var/www/html/gratitude_journal_api/.venv/bin" "JWT_SECRET_KEY=<value-from-previous-step>" "REDIS_URL=redis://default:<password>@localhost:6379"
+   
+   [Install]
+   WantedBy=multi-user.target
+   ```
+* Run the following commands:
+   ```
+   sudo systemctl daemon-reload
+   sudo systemctl enable uvicorn
+   sudo systemctl start uvicorn
+   ```
+* Connect to the website to test it out and ensure it works after closing the terminal
+* Uvicorn logs can be found using this command: `systemctl status uvicorn`
+* Additional logs can be found using this command: `journalctl | grep <insert-uvicorn-pid-here>`
